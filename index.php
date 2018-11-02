@@ -14,8 +14,6 @@ $data = $mysqli -> query("SELECT * FROM department")
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
-git config --global user.email "you@example.com"
-git config --global user.name "Your Name"
 </head>
 <body>
   <div class="container">
