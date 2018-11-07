@@ -27,8 +27,7 @@ $data = $mysqli -> query("SELECT * FROM department")
 
       </tr>
       <?php
-      for($i=1;$i<=$data->num_row();$i++){
-         $rs=$data->fetch_row();
+      while($rs = mysqli_fetch_row($data)) {
       ?>
        <tr>
         <td><?php echo $rs[0];?></td>
