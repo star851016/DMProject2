@@ -1,8 +1,5 @@
 <?php
-$mysqli = new mysqli("localhost","root","", "datamodel");
-$mysqli->query("SET NAMES utf8");
-$data = $mysqli -> query("SELECT * FROM department")
-
+require_once('database.php');
 ?>
 
 <!DOCTYPE html>
