@@ -8,7 +8,7 @@ require_once('database.php');
 						");
 	if (!$res1) {
  		die("sql error:\n" . $mysqli->error);
-	}
+	}	
 require_once('appoint.php');
 ?>
 <!DOCTYPE html>
@@ -60,7 +60,7 @@ require_once('appoint.php');
 		
 	</table>
 </body>
-<script src="jquery-2.1.1.min.js"></script>
+<script src="../jquery-2.1.1.min.js"></script>
 <script type="text/javascript">
 	//按上一週或下一週
 	function week(x){		

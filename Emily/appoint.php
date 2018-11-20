@@ -1,7 +1,6 @@
 <?php
 	//計算當週日期及上下週功能
-	//查詢該課程所有教練有空的時段
-
+	//查詢該課程所有教練有空的時段	
 	require_once('database.php');
 	$getdate = date("Y-m-d H:i:s");
 	
