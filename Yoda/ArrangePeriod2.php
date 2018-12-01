@@ -1,15 +1,6 @@
 <?php
 require_once('database.php');
-	//查詢該會員所有課程
-	$res1 = $mysqli->query("select Course_Type,Course_ID
-							from Course as c , Member as m
-							where 	m.M_ID = c.M_ID and m.M_ID = '1'
-							and c.Remaining_Number > 0
-						");
-	if (!$res1) {
- 		die("sql error:\n" . $mysqli->error);
-	}	
-require_once('..\Emily\appoint.php');
+require_once('..\Yoda\WeekCompute.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -17,20 +8,7 @@ require_once('..\Emily\appoint.php');
 	<title></title>
 </head>
 <body>
-	 <select onchange="csType()" id="ct">
-	 	<option value <?php if (!isset($_SESSION["Course_ID"])) {echo "selected";}?>></option>
-		 <?php while($row1 = $res1->fetch_assoc()){ ?>
-		 	<!-- 如果課程ID有存入session，就將該課程ID預設被選 -->
-	        <option value="<?php echo $row1["Course_ID"]; ?>"
-	        	<?php if (isset($_SESSION["Course_ID"])){
-	        			if ($row1["Course_ID"] == $_SESSION["Course_ID"]){
-	        					echo "selected";
-	        			}
-	        	} ?> >  	
-	        	<?php echo $row1["Course_Type"];?>
-	        </option>
-	    <?php } ?>
-	</select>
+	 
 	<button onclick="week(-1)">上一週</button>
 	<button onclick="week(1)">下一週</button>
 	<table>
@@ -59,41 +37,31 @@ require_once('..\Emily\appoint.php');
 		<?php } ?>
 		
 	</table>
+	
+	<button onclick="SubmitPeriod('2018-11-21 10:00:00', 2)">Submit</button>
 </body>
+
 <script src="../jquery-2.1.1.min.js"></script>
 <script type="text/javascript">
 	//按上一週或下一週
 	function week(x){		
 		$.ajax({
-			url: 'appoint.php',
+			url: 'WeekCompute.php',
 			type: 'POST',
 			data: {				
 				calWeek: x
 			},
 			dataType: "text",
 			success: function(response) {
-				location.href = "index.php";
+				location.href = "ArrangePeriod2.php";
 			}
 		});	
 	}
-	//搜尋該課程所有教練有空的時段
-	function csType(){	
+	//當教練按下Submit按鈕
+	function SubmitPeriod(x,y){	
+		alert(x);
 		$.ajax({
-			url: 'appoint.php',
-			type: 'POST',
-			data: {				
-				Course_ID: $("#ct").val()
-			},
-			dataType: "text",
-			success: function(response) {
-				location.href = "index.php";				
-			}
-		});	
-	}
-	//當使用者按下預約按鈕
-	function apt(x,y){	
-		$.ajax({
-			url: 'addAppoint.php',
+			url: 'SubmitPeriod.php',
 			type: 'POST',
 			data: {	
 				Begin_Time : x,			
@@ -102,7 +70,7 @@ require_once('..\Emily\appoint.php');
 			dataType: "text",
 			success: function(response) {
 				 alert(response);
-				location.href = "index.php";
+				location.href = "SubmitPeriod.php";
 			}
 		});	
 	}

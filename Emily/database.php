@@ -1,7 +1,7 @@
 <?php
 	$mysqlhost = "localhost";
 	$mysqluser = "root";
-	$mysqlpassword = "";
+	$mysqlpassword = "datamodel";
 	$mysqldb = "myadsl_gym";
 	$mysqli= new mysqli($mysqlhost,$mysqluser,$mysqlpassword,$mysqldb);
 	$mysqli->query("set names 'utf8';");

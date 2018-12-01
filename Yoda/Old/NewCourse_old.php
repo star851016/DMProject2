@@ -47,63 +47,53 @@ function AddCourse($connection, $CourseType, $Instructors1, $Instructors2, $Inst
 
 
 /* If input fields are populated, call AddCourse function. */
-if (isset($_POST["Instructors1"])){
-	#Variables from POST
-	$CourseType = htmlentities($_POST['CourseType']);
-	$Instructors1 = htmlentities($_POST['Instructors1']);
-	$Instructors2 = htmlentities($_POST['Instructors2']);
-	$Instructors3 = htmlentities($_POST['Instructors3']);
-	$Price = htmlentities($_POST['Price']);
-	$NumberofSession = htmlentities($_POST['NumberofSession']);
-	$Student = htmlentities($_POST['Student']);
-	$StudentPassword = htmlentities($_POST['StudentPassword']);
+if (isset($_POST["Instructors1"]))
+{
+$CourseType = htmlentities($_POST['CourseType']);
+$Instructors1 = htmlentities($_POST['Instructors1']);
+$Instructors2 = htmlentities($_POST['Instructors2']);
+$Instructors3 = htmlentities($_POST['Instructors3']);
+$Price = htmlentities($_POST['Price']);
+$NumberofSession = htmlentities($_POST['NumberofSession']);
+$Student = htmlentities($_POST['Student']);
+$StudentPassword = htmlentities($_POST['StudentPassword']);
+}
+	
+$ErrorReason =[]
 
-		
-	$ErrorReason =[];
+#Check All Blanks is Filled in 
+if ( (strlen($Instructors1)||strlen($Instructors2)||strlen($Instructors3)) AND strlen($Price)AND strlen($NumberofSession)AND strlen($Student)AND strlen($StudentPassword)) {
+}else{
+echo 'Having Empty Blank(s)';
+$ErrorReason[] = 'Having Empty Blank(s)'
+}
 
-	#Check All Blanks is Filled in 
-	if ( (strlen($Instructors1)||strlen($Instructors2)||strlen($Instructors3)) AND strlen($Price)AND strlen($NumberofSession)AND strlen($Student)AND strlen($StudentPassword)) {
-		
-		#Check The Instructors EXISTS
-		if (strlen($Instructors1)) {
-		$query1_select = "SELECT 1 FROM Instructor WHERE I_ID = $Instructors1";
-		if(!mysqli_fetch_row(mysqli_query($mysqli, $query1_select))) $ErrorReason[] = "NO Instructors:".$Instructors1."." ;
-		}
-		if (strlen($Instructors2)) {
-		$query2_select = "SELECT 1 FROM Instructor WHERE I_ID = $Instructors2";
-		if(!mysqli_fetch_row(mysqli_query($mysqli, $query2_select))) $ErrorReason[] = "NO Instructors:".$Instructors2."." ;
-		}
-		if (strlen($Instructors3)) {
-		$query3_select = "SELECT 1 FROM Instructor WHERE I_ID = $Instructors3";
-		if(!mysqli_fetch_row(mysqli_query($mysqli, $query3_select))) $ErrorReason[] = "NO Instructors:".$Instructors3."." ;
-		}
-			
-		#Check The M_Password is Correct
+#Check The Instructors EXISTS
+if (strlen($Instructors1)) {
+$query1_select = "SELECT Count(*) FROM Instructor WHERE I_ID = $Instructors1";
+if(!mysqli_query($mysqli, $query1_select)) echo "NO Instructors:".$Instructors1 ;
+}
+if (strlen($Instructors2)) {
+$query2_select = "SELECT Count(*) FROM Instructor WHERE I_ID = $Instructors2";
+if(!mysqli_query($mysqli, $query2_select)) echo "NO Instructors:".$Instructors2 ;
+}
+if (strlen($Instructors3)) {
+$query3_select = "SELECT Count(*) FROM Instructor WHERE I_ID = $Instructors3";
+if(!mysqli_query($mysqli, $query3_select)) echo "NO Instructors:".$Instructors3 ;
+}
+	
+	#Check The M_Password is Correct
 		$query0_select = "select member.M_Password FROM `member` WHERE Member.M_ID = $Student "; 
 		$result0_SP = mysqli_fetch_row(mysqli_query($mysqli,  $query0_select))[0]; 
-		if($result0_SP != $StudentPassword) $ErrorReason[] = "Wrong Student ID or Student Password(".$StudentPassword."). Correct Password:".$result0_SP ;
-	
-	}else{
-	$ErrorReason[] = 'Having Empty Blank(s)'.".";
-	}
-
-	if (!sizeof($ErrorReason)){
+		echo "StudentPassword:", $result0_SP;
+		if ($result0_SP == $StudentPassword){
 		
 		#Call Function AddCourse
 		AddCourse($mysqli, $CourseType, $Instructors1, $Instructors2, $Instructors3, $Price, $NumberofSession, $Student, $StudentPassword);
-
-	}else{
-		echo "ErrorReason:" ;
-		foreach ($ErrorReason as $item) {
-			echo $item;
-			}
+		
+		}else{
+		echo 'Wrong Student ID or Password';
 		}
-
-}
-
-
-
-
 ?>
 
 
@@ -186,3 +176,5 @@ while($query_data = mysqli_fetch_row($result)) {
 
 </body>
 </html>
+
+

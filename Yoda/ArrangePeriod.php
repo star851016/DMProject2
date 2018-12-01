@@ -1,15 +1,8 @@
 <?php
 require_once('database.php');
-	//查詢該會員所有課程
-	$res1 = $mysqli->query("select Course_Type,Course_ID
-							from Course as c , Member as m
-							where 	m.M_ID = c.M_ID and m.M_ID = '1'
-							and c.Remaining_Number > 0
-						");
-	if (!$res1) {
- 		die("sql error:\n" . $mysqli->error);
-	}	
-require_once('..\Emily\appoint.php');
+	//查詢該教練所有課程
+	$res1 = $mysqli->query("select `Begin_Time` from period, instructor where instructor.I_ID = '1' ");
+	if (!$res1) die("sql error:\n" . $mysqli->error);
 ?>
 <!DOCTYPE html>
 <html>

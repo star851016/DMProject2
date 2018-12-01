@@ -84,6 +84,17 @@ foreach ($season as $value){
 	}
 	showName("David");
 	showName("Lily");
+	
+	$ErrorReason =[];
+	echo sizeof($ErrorReason);
+	$ErrorReason[] =1111;
+	$ErrorReason[] = $countI."111";
+	
+	if ($ErrorReason){
+		foreach ($ErrorReason as $item) {
+			echo $item;}
+	}		
+
 ?>
 	
   </table>
