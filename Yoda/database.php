@@ -2,7 +2,7 @@
 	$mysqlhost = "localhost";
 	$mysqluser = "root";
 	$mysqlpassword = "datamodel";
-	$mysqldb = "myadsl_gym2";
+	$mysqldb = "myadsl_gym";
 	$mysqli= new mysqli($mysqlhost,$mysqluser,$mysqlpassword,$mysqldb);
 	//錯誤處理
 	if ($mysqli->connect_error != "") {
