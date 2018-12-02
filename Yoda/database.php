@@ -1,7 +1,7 @@
 <?php
 	$mysqlhost = "localhost";
 	$mysqluser = "root";
-	$mysqlpassword = "datamodel";
+	$mysqlpassword = "";
 	$mysqldb = "myadsl_gym";
 	$mysqli= new mysqli($mysqlhost,$mysqluser,$mysqlpassword,$mysqldb);
 	//錯誤處理
