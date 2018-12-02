@@ -29,6 +29,13 @@
 
 <body>
 
+	<!-- Header -->
+	<p>
+			<a href="index.php">Home</a> 
+			<a href="insert.php">Insert New Record</a> 
+			<a href="logout.php">Logout</a>
+	</p>
+		
 	<!--add  Period-->
 	<?php
 		if (isset($_POST["Period_Date"])){
@@ -101,7 +108,43 @@
 		}
 		?>  
 	  
-	</table>
+	<div class="form">
+
+		<h2>View Records</h2>
+		
+		<table width="100%" border="1" style="border-collapse:collapse;">
+			<thead>
+				<tr>
+				<th><strong>count</strong></th>
+				<th><strong>I_ID</strong></th>
+				<th><strong>Begin_Time</strong></th>
+				<th><strong>Edit</strong></th>
+				<th><strong>Delete</strong></th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+					$count=1;
+					$result = mysqli_query($mysqli, "SELECT `I_ID`, `Begin_Time` FROM `period` WHERE I_ID = $Instructor
+					"); 
+					while($row = mysqli_fetch_assoc($result)) { 
+				?>
+				<tr>
+					<td align="center"><?php echo $count; ?></td>
+					<td align="center"><?php echo $row["I_ID"]; ?></td>
+					<td align="center"><?php echo $row["Begin_Time"]; ?></td>
+					<td align="center">
+						<a href="edit.php?id=<?php echo $row["I_ID"]; ?>">Edit</a>
+					</td>
+					<td align="center">
+						<a href="Delete.php?id=<?php echo $row["I_ID"].','.$row["Begin_Time"]; ?>">Delete</a>
+					</td>
+				</tr>
+				<?php $count++; } 
+				?>
+			</tbody>
+		</table>
+	</div>
 
 
 </body>

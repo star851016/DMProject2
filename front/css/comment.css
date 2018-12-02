@@ -1,0 +1,32 @@
+.std-comment{
+	margin-bottom: 15px;
+}
+
+.comment-all{
+    margin-top:10px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(200,200,200,0.5);
+}
+
+.comment-date{
+	font-size: small;
+}
+
+.comment-info{
+	text-align: left;
+}
+
+.comment-floor{
+	font-size: large;
+	font-weight: bold;
+	text-align: left;
+}
+
+.comment-from{
+	font-size: small;
+}
+
+.comment-content{
+	margin-top: 5px;
+	padding-bottom: 20px;
+}
