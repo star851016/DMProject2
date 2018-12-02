@@ -57,7 +57,7 @@
 	?>
 	
 	<!--show all Course-->
-	<h2>all Courses</h2>
+	<h4>all Courses</h4>
 	<table border="1" cellpadding="2" cellspacing="2">
 			<tr>
 				<td>instructor ID</td>
@@ -90,35 +90,54 @@
 	</table>
 	
 	<!--show all period-->
-
+	<h4>all periods</h4>
+	<table border="1" cellpadding="2" cellspacing="2">
+			<tr>
+				<td>I_ID</td>
+				<td>Begin_Time</td>
+			</tr>
+	  
+		<?php
+		$result = mysqli_query($mysqli, "SELECT `I_ID`, `Begin_Time` FROM `period` WHERE I_ID = $Instructor
+		"); 
+		while($query_data = mysqli_fetch_row($result)) {
+		  echo "<tr>";
+		  echo "<td>",$query_data[0], "</td>",
+			   "<td>",$query_data[1], "</td>";
+		  echo "</tr>";
+		}
+		?>  
 	  
 	<div class="form">
 
-		<h2>all period</h2>
+		<h2>View Records</h2>
 		
 		<table width="100%" border="1" style="border-collapse:collapse;">
 			<thead>
 				<tr>
+				<th><strong>count</strong></th>
 				<th><strong>I_ID</strong></th>
 				<th><strong>Begin_Time</strong></th>
+				<th><strong>Appointed</strong></th>
 				<th><strong>Delete</strong></th>
 				</tr>
 			</thead>
 			<tbody>
 				<?php
 					$count=1;
-					$result = mysqli_query($mysqli, "SELECT period.I_ID, period.Begin_Time, appoint.If_Checkin FROM `period` LEFT JOIN `appoint` on period.I_ID = appoint.I_ID AND period.Begin_Time = appoint.Begin_Time WHERE period.I_ID = $Instructor 
+					$result = mysqli_query($mysqli, "SELECT `I_ID`, `Begin_Time` FROM `period` WHERE I_ID = $Instructor
 					"); 
 					while($row = mysqli_fetch_assoc($result)) { 
 				?>
 				<tr>
+					<td align="center"><?php echo $count; ?></td>
 					<td align="center"><?php echo $row["I_ID"]; ?></td>
 					<td align="center"><?php echo $row["Begin_Time"]; ?></td>
 					<td align="center">
-						<a href="Delete.php?id=<?php echo $row["I_ID"].",'".$row["Begin_Time"]."'"; ?>"><?php 
-							#如果["If_Checkin"]不等於'appoint'，代表該時段沒被預約<才可以刪除
-							if(!$row["If_Checkin"]=='appoint'){ echo 'Delete'; }else{echo '' ;};
-						?></a>
+						<a href="edit.php?id=<?php echo $row["I_ID"]; ?>">Edit</a>
+					</td>
+					<td align="center">
+						<a href="Delete.php?id=<?php echo $row["I_ID"].','.$row["Begin_Time"]; ?>">Delete</a>
 					</td>
 				</tr>
 				<?php $count++; } 
