@@ -51,26 +51,19 @@
 		}
 	}
 
+	$M_ID = 1;
+
 	// 如果課程ID有存入session，就去資料庫查詢所有教練有空的時間
 	if (isset($_SESSION["Course_ID"])) {
 		$Course_ID = $_SESSION["Course_ID"];
-		$res = $mysqli->query("SELECT I_ID,Begin_Time
-								FROM
-								 (
-								   SELECT p.I_ID,p.Begin_Time
-								    FROM period as p,compose as c,instructor as i
-								    where c.Course_ID = $Course_ID
-								    and c.I_ID = i.I_ID
-								    and p.I_ID = i.I_ID
-								   UNION ALL
-								   SELECT I_ID,Begin_Time
-								 FROM appoint
-								)  t
-								WHERE Begin_Time BETWEEN '$getdate' AND '$End 23:59:59'
-								GROUP BY I_ID,Begin_Time
-								HAVING COUNT(*) = 1
-								ORDER BY Begin_Time,I_ID"
-							);	
+		$res = $mysqli->query("
+								SELECT i.I_ID,i.Begin_Time
+								FROM (SELECT * FROM ifree where I_ID in (SELECT I_ID from compose WHERE Course_ID = $Course_ID )) i
+								left outer join (SELECT * FROM mnotfree WHERE M_ID = $M_ID) m
+								on (m.Begin_Time = i.Begin_Time)
+								where m.If_Checkin is null
+								and i.Begin_Time BETWEEN '$getdate' AND '$End 23:59:59'
+							");	
 		while($row = $res->fetch_assoc()){
 			$Begin_Time=$row['Begin_Time'];	
 
