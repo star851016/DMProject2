@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機: 127.0.0.1
--- 產生時間： 2018 年 11 月 18 日 13:48
+-- 產生時間： 2018 年 12 月 02 日 15:15
 -- 伺服器版本: 10.1.36-MariaDB
 -- PHP 版本： 7.2.11
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- 資料庫： `myadsl_gym`
+-- 資料庫： `test1202`
 --
 
 -- --------------------------------------------------------
@@ -195,7 +195,8 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 ALTER TABLE `appoint`
   ADD PRIMARY KEY (`I_ID`,`Course_ID`,`Begin_Time`),
-  ADD KEY `Appoint_Compose_FK2` (`Course_ID`);
+  ADD KEY `Appoint_Compose_FK2` (`Course_ID`),
+  ADD KEY `Appoint_Compose_FK1` (`I_ID`,`Begin_Time`);
 
 --
 -- 資料表索引 `compose`
@@ -259,7 +260,7 @@ ALTER TABLE `member`
 -- 資料表的 Constraints `appoint`
 --
 ALTER TABLE `appoint`
-  ADD CONSTRAINT `Appoint_Compose_FK1` FOREIGN KEY (`I_ID`) REFERENCES `period` (`I_ID`),
+  ADD CONSTRAINT `Appoint_Compose_FK1` FOREIGN KEY (`I_ID`,`Begin_Time`) REFERENCES `period` (`I_ID`, `Begin_Time`),
   ADD CONSTRAINT `Appoint_Compose_FK2` FOREIGN KEY (`Course_ID`) REFERENCES `course` (`Course_ID`);
 
 --
