@@ -37,9 +37,5 @@ require_once('database.php');
 		
 
 </body>
-	
-<?php
-				#Begin_Time : x,			
-				#I_ID: y
-				?>
+
 </html>
