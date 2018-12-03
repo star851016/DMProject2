@@ -67,15 +67,38 @@
             <form id="registerForm">
 	            <div class="row">
 	                <div class="col-lg-12">
+					<!--註冊欄位-->
 	                	<div class="row control-group">
 	                		<div class="col-lg-4 col-sm-3"></div>
 	                		<div class="col-lg-4 col-sm-6">
-				                <label for="SID">Account</label>
-				                <input type="text" class="form-control" placeholder="account" id="SID" required data-validation-regex-regex="^[a-zA-Z]{1}[0-9]{8}$"></input>
+				                <label for="Identity">Identity</label>
+				                <select class="form-control" id="selectIdentity" name="selectIdentity">
+						          	<option value="-1" disabled selected hidden>Please choose an identity.</option>
+						           	<option value="1">Member</option>
+						           	<option value="2">Instructor</option>
+						        </select>									
 	                		</div>
 	                		<div class="col-lg-4 col-sm-3"></div>
 	                	</div>
 
+						<div class="row control-group">
+	                		<div class="col-lg-4 col-sm-3"></div>
+	                		<div class="col-lg-4 col-sm-6">
+				                <label for="Name">Name</label>
+				                <input type="text" class="form-control" placeholder="please enter your name" id="Name" required maxlength="15"></input>
+	                		</div>
+	                		<div class="col-lg-4 col-sm-3"></div>
+	                	</div>
+						
+						<div class="row control-group">
+	                		<div class="col-lg-4 col-sm-3"></div>
+	                		<div class="col-lg-4 col-sm-6">
+				                <label for="mail">E-mail</label>
+				                <input type="text" class="form-control" placeholder="please enter your e-mail address" id="email" required maxlength="15"></input>
+	                		</div>
+	                		<div class="col-lg-4 col-sm-3"></div>
+	                	</div>
+						
 	                	<div class="row control-group">
 	                		<div class="col-lg-4 col-sm-3"></div>
 	                		<div class="col-lg-4 col-sm-6">
@@ -93,25 +116,7 @@
 	                		</div>
 	                		<div class="col-lg-4 col-sm-3"></div>
 	                	</div>
-
-	                	<div class="row control-group">
-	                		<div class="col-lg-4 col-sm-3"></div>
-	                		<div class="col-lg-4 col-sm-6">
-				                <label for="Name">Name</label>
-				                <input type="text" class="form-control" placeholder="please enter your name" id="Name" required maxlength="15"></input>
-	                		</div>
-	                		<div class="col-lg-4 col-sm-3"></div>
-	                	</div>
-
-	                	<div class="row control-group">
-	                		<div class="col-lg-4 col-sm-3"></div>
-	                		<div class="col-lg-4 col-sm-6">
-				                <label for="mail">E-mail</label>
-				                <input type="text" class="form-control" placeholder="please enter your e-mail address" id="email" required maxlength="15"></input>
-	                		</div>
-	                		<div class="col-lg-4 col-sm-3"></div>
-	                	</div>
-
+						
 	                	<div class="row control-group">
 	                		<div class="col-lg-4 col-sm-3"></div>
 	                		<div class="col-lg-4 col-sm-6">
@@ -124,7 +129,7 @@
 	                	<div class="row control-group">
 	                		<div class="col-lg-4 col-sm-3"></div>
 	                		<div class="col-lg-4 col-sm-6">
-				                <label for="Gender">Sex</label>
+				                <label for="Gender">Gender</label>
 				                <select class="form-control" id="Gender" name="Gender">
 									<option value="M">Male</option>
 									<option value="F">Female</option>
@@ -146,7 +151,7 @@
 						                <?php $start = getdate()["year"]; ?>
 						                	<option value="-1" disabled selected hidden>year</option>
 						                	<?php
-						                		for($i = $start; $i >=($start-65); $i--)
+						                		for($i = $start-10; $i >=($start-65); $i--)
 						                		{
 						                	?>
 						                	<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
