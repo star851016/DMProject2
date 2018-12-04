@@ -16,7 +16,12 @@
 		$Checked_Begin_Time = mysqli_real_escape_string($connection, $Begin_Time);
 		
 		$query1_INSERT = "INSERT INTO `period`(`I_ID`, `Begin_Time`) VALUES ($Instructor, '$Checked_Begin_Time');";
-		if(!mysqli_query($connection, $query1_INSERT)) echo("<p>Error adding Period data.</p>");
+		if(!mysqli_query($connection, $query1_INSERT)) {
+			echo("Error adding Period data below:<br>");
+		}else{
+			print('Successfully Arranged Your Periods Below:<br>');
+		}
+
 	}
 ?>
 
@@ -42,12 +47,12 @@
 			
 			$Period_Date = $_POST["Period_Date"];
 			$time = $_POST ["time"];
-			print('Successfully Arranged Your Periods Below:<br>');		
+			
 			
 			for($j=0 ; $j< count($time) ; $j++){
 				$Begin_Time = $Period_Date.' '.$time[$j];
-				print($Begin_Time.'<br>');
 				AddPeriod($mysqli, $Instructor, $Begin_Time);
+				print($Begin_Time.'<br>');
 			}
 			
 		}
