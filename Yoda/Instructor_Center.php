@@ -1,7 +1,7 @@
 <?php
 	require_once('database.php');
 	
-	#[待改]要抓Session的教練
+	#[待改]要抓Period的教練
 	if(isset($_POST ["Instructor"])){
 		$Instructor =  $_POST ["Instructor"];
 	}else{
@@ -16,7 +16,11 @@
 		$Checked_Begin_Time = mysqli_real_escape_string($connection, $Begin_Time);
 		
 		$query1_INSERT = "INSERT INTO `period`(`I_ID`, `Begin_Time`) VALUES ($Instructor, '$Checked_Begin_Time');";
-		if(!mysqli_query($connection, $query1_INSERT)) echo("<p>Error adding Period data.</p>");
+		if(!mysqli_query($connection, $query1_INSERT)){
+			echo("Error Arranged Period Data Below:<br>");
+		}else{
+			print('Successfully Arranged Your Periods Below:<br>');	
+		}
 	}
 ?>
 
@@ -41,13 +45,12 @@
 		if (isset($_POST["Period_Date"])){
 			
 			$Period_Date = $_POST["Period_Date"];
-			$time = $_POST ["time"];
-			print('Successfully Arranged Your Periods Below:<br>');		
+			$time = $_POST ["time"];	
 			
 			for($j=0 ; $j< count($time) ; $j++){
 				$Begin_Time = $Period_Date.' '.$time[$j];
-				print($Begin_Time.'<br>');
 				AddPeriod($mysqli, $Instructor, $Begin_Time);
+				print($Begin_Time.'<br>');
 			}
 			
 		}
@@ -66,12 +69,12 @@
 				<td>M_ID</td>
 				<td>Price</td>
 				<td>Course_Type</td>
-				<td>Number_of_Session</td>
+				<td>Number_of_Period</td>
 				<td>Remaining_Number</td>
 			</tr>
 	  
 		<?php
-		$result = mysqli_query($mysqli, "SELECT instructor.I_ID, instructor.I_Name, course.Course_ID, course.M_ID, course.Price, course.Course_Type, course.Number_of_Session, course.Remaining_Number FROM course, compose,instructor WHERE course.Course_ID = compose.Course_ID AND compose.I_ID = instructor.I_ID AND instructor.I_ID = $Instructor;
+		$result = mysqli_query($mysqli, "SELECT instructor.I_ID, instructor.I_Name, course.Course_ID, course.M_ID, course.Price, course.Course_Type, course.Number_of_Period, course.Remaining_Number FROM course, compose,instructor WHERE course.Course_ID = compose.Course_ID AND compose.I_ID = instructor.I_ID AND instructor.I_ID = $Instructor;
 			"); 
 		while($query_data = mysqli_fetch_row($result)) {
 		  echo "<tr>";
@@ -107,7 +110,7 @@
 			<tbody>
 				<?php
 					$count=1;
-					$result = mysqli_query($mysqli, "SELECT period.I_ID, period.Begin_Time, appoint.If_Checkin FROM `period` LEFT JOIN `appoint` on period.I_ID = appoint.I_ID AND period.Begin_Time = appoint.Begin_Time WHERE period.I_ID = $Instructor 
+					$result = mysqli_query($mysqli, "SELECT period.I_ID, period.Begin_Time, appoint.Status FROM `period` LEFT JOIN `appoint` on period.I_ID = appoint.I_ID AND period.Begin_Time = appoint.Begin_Time WHERE period.I_ID = $Instructor 
 					"); 
 					while($row = mysqli_fetch_assoc($result)) { 
 				?>
@@ -116,8 +119,8 @@
 					<td align="center"><?php echo $row["Begin_Time"]; ?></td>
 					<td align="center">
 						<a href="Delete.php?id=<?php echo $row["I_ID"].",'".$row["Begin_Time"]."'"; ?>"><?php 
-							#如果["If_Checkin"]不等於'appoint'，代表該時段沒被預約<才可以刪除
-							if(!$row["If_Checkin"]=='appoint'){ echo 'Delete'; }else{echo '' ;};
+							#如果["Status"]不等於'appoint'，代表該時段沒被預約<才可以刪除
+							if(!$row["Status"]=='appoint'){ echo 'Delete'; }else{echo '' ;};
 						?></a>
 					</td>
 				</tr>

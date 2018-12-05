@@ -2,17 +2,17 @@
 	require_once('database.php');
 
 	/* Add an Course and acoording instructor to table Course and table Compose. */
-	function AddCourse($connection, $CourseType, $Instructors1, $Instructors2, $Instructors3, $Price, $NumberofSession, $Student, $StudentPassword) {
+	function AddCourse($connection, $CourseType, $Instructors1, $Instructors2, $Instructors3, $Price, $NumberofPeriod, $Student, $StudentPassword) {
 		$AC_I1 = mysqli_real_escape_string($connection, $Instructors1);
 		$AC_I2 = mysqli_real_escape_string($connection, $Instructors2);
 		$AC_I3 = mysqli_real_escape_string($connection, $Instructors3);
 		$AC_P = mysqli_real_escape_string($connection, $Price);
 		$AC_CT = mysqli_real_escape_string($connection, $CourseType);
-		$AC_NS = mysqli_real_escape_string($connection, $NumberofSession);
+		$AC_NS = mysqli_real_escape_string($connection, $NumberofPeriod);
 		$AC_S = mysqli_real_escape_string($connection, $Student);
 		$AC_SP = mysqli_real_escape_string($connection, $StudentPassword);
 
-		$query1_INSERT = "INSERT INTO `Course` (`M_ID`, `Price`, `Course_Type`, `Number_of_Session`, `Remaining_Number` ) VALUES ('$AC_S', '$AC_P', '$AC_CT', '$AC_NS', '$AC_NS');";
+		$query1_INSERT = "INSERT INTO `Course` (`M_ID`, `Price`, `Course_Type`, `Number_of_Period`, `Remaining_Number` ) VALUES ('$AC_S', '$AC_P', '$AC_CT', '$AC_NS', '$AC_NS');";
 
 		if(!mysqli_query($connection, $query1_INSERT)) echo("<p>Error adding Course data.</p>");
 
@@ -54,7 +54,7 @@ if (isset($_POST["Instructors1"])){
 	$Instructors2 = htmlentities($_POST['Instructors2']);
 	$Instructors3 = htmlentities($_POST['Instructors3']);
 	$Price = htmlentities($_POST['Price']);
-	$NumberofSession = htmlentities($_POST['NumberofSession']);
+	$NumberofPeriod = htmlentities($_POST['NumberofPeriod']);
 	$Student = htmlentities($_POST['Student']);
 	$StudentPassword = htmlentities($_POST['StudentPassword']);
 
@@ -62,7 +62,7 @@ if (isset($_POST["Instructors1"])){
 	$ErrorReason =[];
 
 	#Check All Blanks is Filled in 
-	if ( (strlen($Instructors1)||strlen($Instructors2)||strlen($Instructors3)) AND strlen($Price)AND strlen($NumberofSession)AND strlen($Student)AND strlen($StudentPassword)) {
+	if ( (strlen($Instructors1)||strlen($Instructors2)||strlen($Instructors3)) AND strlen($Price)AND strlen($NumberofPeriod)AND strlen($Student)AND strlen($StudentPassword)) {
 		
 		#Check The Instructors EXISTS
 		if (strlen($Instructors1)) {
@@ -90,7 +90,7 @@ if (isset($_POST["Instructors1"])){
 	if (!sizeof($ErrorReason)){
 		
 		#Call Function AddCourse
-		AddCourse($mysqli, $CourseType, $Instructors1, $Instructors2, $Instructors3, $Price, $NumberofSession, $Student, $StudentPassword);
+		AddCourse($mysqli, $CourseType, $Instructors1, $Instructors2, $Instructors3, $Price, $NumberofPeriod, $Student, $StudentPassword);
 
 	}else{
 		echo "ErrorReason:" ;
@@ -128,8 +128,8 @@ if (isset($_POST["Instructors1"])){
         <input type="text" name="Price" maxlength="20" size="20" value=30000 />
     </td> </tr>
 
-    <tr> <td>Number of Session</td><td>
-        <input type="text" name="NumberofSession" maxlength="20" size="20"  value=24 />
+    <tr> <td>Number of Period</td><td>
+        <input type="text" name="NumberofPeriod" maxlength="20" size="20"  value=24 />
     </td> </tr>
   
     <tr> <td>Student</td><td>
@@ -154,7 +154,7 @@ if (isset($_POST["Instructors1"])){
 		<td>Instructors</td>
 		<td>Price</td>
 		<td>Course Type</td>
-		<td>Number of Session</td>
+		<td>Number of Period</td>
 		<td>Remaining Number</td>
 		<td>Student</td>
 		<td>Student's Password</td>
@@ -162,7 +162,7 @@ if (isset($_POST["Instructors1"])){
 	  
 	<?php
 
-		$result = mysqli_query($mysqli, "SELECT Course.Course_ID, GROUP_CONCAT(compose.I_ID SEPARATOR '+'), Price, Course_Type, Number_of_Session, Remaining_Number, Course.M_ID, member.M_Password
+		$result = mysqli_query($mysqli, "SELECT Course.Course_ID, GROUP_CONCAT(compose.I_ID SEPARATOR '+'), Price, Course_Type, Number_of_Period, Remaining_Number, Course.M_ID, member.M_Password
 		FROM `Course`, `member`, `compose`
 		WHERE Course.M_ID = Member.M_ID AND Course.Course_ID = compose.Course_ID
 		GROUP BY Course.Course_ID
