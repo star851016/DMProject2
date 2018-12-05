@@ -9,7 +9,7 @@ require_once('database.php');
 	if (!$res1) {
  		die("sql error:\n" . $mysqli->error);
 	}	
-require_once('..\Emily\appoint.php');
+require_once('..\Member\appoint.php');
 ?>
 <!DOCTYPE html>
 <html>

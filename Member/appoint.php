@@ -61,7 +61,7 @@
 								FROM (SELECT * FROM ifree where I_ID in (SELECT I_ID from compose WHERE Course_ID = $Course_ID )) i
 								left outer join (SELECT * FROM mnotfree WHERE M_ID = $M_ID) m
 								on (m.Begin_Time = i.Begin_Time)
-								where m.If_Checkin is null
+								where m.Status is null
 								and i.Begin_Time BETWEEN '$getdate' AND '$End 23:59:59'
 							");	
 		while($row = $res->fetch_assoc()){
