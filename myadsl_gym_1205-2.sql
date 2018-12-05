@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機: 127.0.0.1
--- 產生時間： 2018 年 12 月 05 日 03:29
+-- 產生時間： 2018 年 12 月 05 日 11:30
 -- 伺服器版本: 10.1.36-MariaDB
 -- PHP 版本： 7.2.11
 
@@ -41,7 +41,10 @@ CREATE TABLE `appoint` (
 
 INSERT INTO `appoint` (`Course_ID`, `I_ID`, `Begin_Time`, `Status`) VALUES
 (1, 2, '2018-12-18 19:00:00', 'Appoint'),
-(2, 1, '2018-11-18 19:00:00', 'Appoint');
+(2, 1, '2018-11-18 19:00:00', 'Absent'),
+(2, 1, '2018-12-05 15:00:00', 'Absent'),
+(2, 1, '2018-12-05 16:00:00', 'Absent'),
+(2, 1, '2018-12-05 17:00:00', 'Absent');
 
 -- --------------------------------------------------------
 
@@ -63,13 +66,18 @@ INSERT INTO `compose` (`I_ID`, `Course_ID`) VALUES
 (1, 2),
 (1, 3),
 (1, 4),
+(1, 5),
+(1, 6),
 (2, 1),
 (2, 2),
 (2, 3),
 (2, 4),
+(2, 6),
 (3, 1),
 (3, 3),
-(3, 4);
+(3, 4),
+(3, 5),
+(3, 6);
 
 -- --------------------------------------------------------
 
@@ -79,23 +87,25 @@ INSERT INTO `compose` (`I_ID`, `Course_ID`) VALUES
 
 CREATE TABLE `course` (
   `Course_ID` int(6) NOT NULL,
-  `IG_ID` int(6) NOT NULL,
   `M_ID` int(6) NOT NULL,
   `Price` int(6) NOT NULL,
   `Course_Type` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
   `Number_of_Period` int(3) NOT NULL,
-  `Remaining_Number` int(3) NOT NULL
+  `Remaining_Number` int(3) NOT NULL,
+  `Open_Time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- 資料表的匯出資料 `course`
 --
 
-INSERT INTO `course` (`Course_ID`, `IG_ID`, `M_ID`, `Price`, `Course_Type`, `Number_of_Period`, `Remaining_Number`) VALUES
-(1, 0, 1, 3000, '搏擊', 25, 25),
-(2, 0, 2, 5000, '重訓', 40, 40),
-(3, 0, 1, 30000, '基本重訓', 24, 24),
-(4, 0, 1, 30000, '基本重訓', 24, 24);
+INSERT INTO `course` (`Course_ID`, `M_ID`, `Price`, `Course_Type`, `Number_of_Period`, `Remaining_Number`, `Open_Time`) VALUES
+(1, 1, 3000, '搏擊', 25, 25, '2018-12-05 11:16:21'),
+(2, 2, 5000, '重訓', 40, 40, '2018-12-05 11:16:21'),
+(3, 1, 30000, '基本重訓', 24, 24, '2018-12-05 11:16:21'),
+(4, 1, 30000, '基本重訓', 24, 24, '2018-12-05 11:16:21'),
+(5, 1, 30000, '基本重訓', 24, 24, '2018-12-05 11:16:21'),
+(6, 1, 30000, '基本重訓', 24, 24, '2018-12-05 11:16:21');
 
 -- --------------------------------------------------------
 
@@ -143,7 +153,8 @@ CREATE TABLE `kpi` (
 INSERT INTO `kpi` (`KPI_ID`, `Amount_Standard`) VALUES
 (1, 100000),
 (2, 150000),
-(3, 200000);
+(3, 200000),
+(4, 100000);
 
 -- --------------------------------------------------------
 
@@ -173,6 +184,20 @@ INSERT INTO `member` (`M_ID`, `M_Name`, `M_Email`, `M_Address`, `M_Age`, `M_Phon
 -- --------------------------------------------------------
 
 --
+-- 替換檢視表以便查看 `monthly_kpi_report`
+-- (請參考以下實際畫面)
+--
+CREATE TABLE `monthly_kpi_report` (
+`I_ID` int(6)
+,`I_Name` varchar(30)
+,`KPI_ID` int(6)
+,`Amount_Standard` int(6)
+,`ThisMounthSaleAmount` decimal(32,0)
+);
+
+-- --------------------------------------------------------
+
+--
 -- 資料表結構 `period`
 --
 
@@ -194,6 +219,13 @@ INSERT INTO `period` (`I_ID`, `Begin_Time`) VALUES
 (1, '2018-12-05 10:00:00'),
 (1, '2018-12-05 11:00:00'),
 (1, '2018-12-05 12:00:00'),
+(1, '2018-12-05 13:00:00'),
+(1, '2018-12-05 14:00:00'),
+(1, '2018-12-05 15:00:00'),
+(1, '2018-12-05 16:00:00'),
+(1, '2018-12-05 17:00:00'),
+(1, '2018-12-05 18:00:00'),
+(1, '2018-12-05 19:00:00'),
 (1, '2018-12-18 20:00:00'),
 (1, '2018-12-19 00:00:00'),
 (1, '2018-12-20 12:00:00'),
@@ -208,6 +240,15 @@ INSERT INTO `period` (`I_ID`, `Begin_Time`) VALUES
 (3, '2018-12-18 19:00:00'),
 (3, '2018-12-18 21:00:00'),
 (3, '2018-12-21 09:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- 檢視表結構 `monthly_kpi_report`
+--
+DROP TABLE IF EXISTS `monthly_kpi_report`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `monthly_kpi_report`  AS  select `instructor`.`I_ID` AS `I_ID`,`instructor`.`I_Name` AS `I_Name`,`instructor`.`KPI_ID` AS `KPI_ID`,`kpi`.`Amount_Standard` AS `Amount_Standard`,sum(`course`.`Price`) AS `ThisMounthSaleAmount` from (((`instructor` join `kpi`) join `compose`) join `course`) where ((`instructor`.`KPI_ID` = `kpi`.`KPI_ID`) and (`instructor`.`I_ID` = `compose`.`I_ID`) and (`compose`.`Course_ID` = `course`.`Course_ID`) and (month(`course`.`Open_Time`) = month(curdate()))) group by `instructor`.`I_ID` ;
 
 --
 -- 已匯出資料表的索引
@@ -267,7 +308,7 @@ ALTER TABLE `period`
 -- 使用資料表 AUTO_INCREMENT `course`
 --
 ALTER TABLE `course`
-  MODIFY `Course_ID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Course_ID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- 使用資料表 AUTO_INCREMENT `instructor`
@@ -316,6 +357,14 @@ ALTER TABLE `instructor`
 --
 ALTER TABLE `period`
   ADD CONSTRAINT `Period_Instructor_FK` FOREIGN KEY (`I_ID`) REFERENCES `instructor` (`I_ID`);
+
+DELIMITER $$
+--
+-- 事件
+--
+CREATE DEFINER=`root`@`localhost` EVENT `ChangeStatus` ON SCHEDULE EVERY 1 HOUR STARTS '2010-12-05 16:53:00' ON COMPLETION NOT PRESERVE ENABLE COMMENT 'Change Status.' DO update Appoint SET Status = 'Absent' WHERE Status = 'Appoint' AND Begin_Time <= NOW()$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

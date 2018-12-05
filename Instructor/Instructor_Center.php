@@ -74,7 +74,7 @@
 			</tr>
 	  
 		<?php
-		$result = mysqli_query($mysqli, "SELECT instructor.I_ID, instructor.I_Name, course.Course_ID, course.M_ID, course.Price, course.Course_Type, course.Number_of_Period, course.Remaining_Number FROM course, compose,instructor WHERE course.Course_ID = compose.Course_ID AND compose.I_ID = instructor.I_ID AND instructor.I_ID = $Instructor;
+		$result = mysqli_query($mysqli, "SELECT instructor.I_ID, instructor.I_Name, course.Course_ID, course.M_ID, course.Price, course.Course_Type, course.Number_of_Period, course.Remaining_Number FROM course, compose,instructor WHERE course.Course_ID = compose.Course_ID AND compose.I_ID = instructor.I_ID AND instructor.I_ID = $Instructor AND course.Remaining_Number > 0;
 			"); 
 		while($query_data = mysqli_fetch_row($result)) {
 		  echo "<tr>";
@@ -110,7 +110,7 @@
 			<tbody>
 				<?php
 					$count=1;
-					$result = mysqli_query($mysqli, "SELECT period.I_ID, period.Begin_Time, appoint.Status FROM `period` LEFT JOIN `appoint` on period.I_ID = appoint.I_ID AND period.Begin_Time = appoint.Begin_Time WHERE period.I_ID = $Instructor 
+					$result = mysqli_query($mysqli, "SELECT period.I_ID, period.Begin_Time, appoint.Status FROM `period` LEFT JOIN `appoint` on period.I_ID = appoint.I_ID AND period.Begin_Time = appoint.Begin_Time WHERE period.I_ID = $Instructor AND period.Begin_Time > NOW();
 					"); 
 					while($row = mysqli_fetch_assoc($result)) { 
 				?>

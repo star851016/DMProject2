@@ -157,15 +157,15 @@ if (isset($_POST["Instructors1"])){
 		<td>Number of Period</td>
 		<td>Remaining Number</td>
 		<td>Student</td>
-		<td>Student's Password</td>
 	</tr>
 	  
 	<?php
 
-		$result = mysqli_query($mysqli, "SELECT Course.Course_ID, GROUP_CONCAT(compose.I_ID SEPARATOR '+'), Price, Course_Type, Number_of_Period, Remaining_Number, Course.M_ID, member.M_Password
+		$result = mysqli_query($mysqli, "SELECT Course.Course_ID, GROUP_CONCAT(compose.I_ID SEPARATOR '+'), Price, Course_Type, Number_of_Period, Remaining_Number, Course.M_ID
 		FROM `Course`, `member`, `compose`
 		WHERE Course.M_ID = Member.M_ID AND Course.Course_ID = compose.Course_ID
 		GROUP BY Course.Course_ID
+		ORDER BY Course.Course_ID DESC;
 		"); 
 
 		while($query_data = mysqli_fetch_row($result)) {
@@ -176,8 +176,7 @@ if (isset($_POST["Instructors1"])){
 			   "<td>",$query_data[3], "</td>",
 			   "<td>",$query_data[4], "</td>",
 			   "<td>",$query_data[5], "</td>",
-			   "<td>",$query_data[6], "</td>",
-			   "<td>",$query_data[7], "</td>";
+			   "<td>",$query_data[6], "</td>";
 		  echo "</tr>";
 		}
 	?>  
