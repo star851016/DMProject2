@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機: 127.0.0.1
--- 產生時間： 2018 年 12 月 05 日 11:30
+-- 產生時間： 2018 年 12 月 06 日 11:26
 -- 伺服器版本: 10.1.36-MariaDB
 -- PHP 版本： 7.2.11
 
@@ -40,11 +40,24 @@ CREATE TABLE `appoint` (
 --
 
 INSERT INTO `appoint` (`Course_ID`, `I_ID`, `Begin_Time`, `Status`) VALUES
-(1, 2, '2018-12-18 19:00:00', 'Appoint'),
+(1, 2, '2018-12-18 19:00:00', 'Checkin'),
 (2, 1, '2018-11-18 19:00:00', 'Absent'),
 (2, 1, '2018-12-05 15:00:00', 'Absent'),
 (2, 1, '2018-12-05 16:00:00', 'Absent'),
 (2, 1, '2018-12-05 17:00:00', 'Absent');
+
+--
+-- 觸發器 `appoint`
+--
+DELIMITER $$
+CREATE TRIGGER `Remaining_Number_reduce` AFTER UPDATE ON `appoint` FOR EACH ROW BEGIN
+IF NEW.Status = 'Checkin' THEN
+UPDATE course SET Remaining_Number = Remaining_Number - 1
+where Course.Course_ID=NEW.Course_ID;
+END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -100,7 +113,7 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`Course_ID`, `M_ID`, `Price`, `Course_Type`, `Number_of_Period`, `Remaining_Number`, `Open_Time`) VALUES
-(1, 1, 3000, '搏擊', 25, 25, '2018-12-05 11:16:21'),
+(1, 1, 3000, '搏擊', 25, 23, '2018-12-05 11:16:21'),
 (2, 2, 5000, '重訓', 40, 40, '2018-12-05 11:16:21'),
 (3, 1, 30000, '基本重訓', 24, 24, '2018-12-05 11:16:21'),
 (4, 1, 30000, '基本重訓', 24, 24, '2018-12-05 11:16:21'),
