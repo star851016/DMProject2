@@ -21,12 +21,10 @@
 	</tr>
 		<?php
 
-		$result = mysqli_query($mysqli, "SELECT `I_ID`, `Course_Type`, `Begin_Time`, `Number_of_Session`-`Remaining_Number`
-		FROM `course`, `appoint`
-		WHERE `course`.`Course_ID`=`appoint`.`Course_ID` and `appoint`.`If_Checkin`='Appoint'
+		$result = mysqli_query($mysqli, "
+		SELECT `I_ID`, `Course_Type`, `Begin_Time`, `Number_of_Period`-`Remaining_Number` FROM `course`, `appoint` WHERE `course`.`Course_ID`=`appoint`.`Course_ID` and `appoint`.`Status`='Checkin' 
 		"); 
-		#因為資料庫裏面沒有值沒辦法抓資料，所以上面的SQL的If_Checkin可先用Appoint替代來看是否能成功抓取值
-		#等資料庫新增己底資料之後要記得改成Checkin
+
 		while($query_data = mysqli_fetch_row($result)) {
 		  echo "<tr>";
 		  echo "<td>",$query_data[0], "</td>",
