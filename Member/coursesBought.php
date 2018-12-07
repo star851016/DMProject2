@@ -20,10 +20,11 @@
 		<td>Remaining Number</td>
 	</tr>
 		<?php
-
-		$result = mysqli_query($mysqli, "SELECT `Course_Type`,`Price`, `Number_of_Session`,`Remaining_Number`
-		FROM `course`
-		WHERE `course`.`Course_ID`=1
+		$thisCourseID = 1;
+		$result = mysqli_query($mysqli, "
+			SELECT `Course_Type`,`Price`, `Number_of_Period`,`Remaining_Number`
+			FROM `course`
+			WHERE `course`.`Course_ID`=$thisCourseID
 		"); 
 		while($query_data = mysqli_fetch_row($result)) {
 		  echo "<tr>";
