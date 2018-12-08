@@ -20,7 +20,7 @@
 </div>
 <div class="container">
 <!-- Display table data. -->
-<table class="table table-hover" border="1" cellpadding="2" cellspacing="2">
+<table class="table table-hover"  cellpadding="2" cellspacing="2">
 	<thead>
 	<tr>
 		<td>Instructors ID</td>
@@ -29,6 +29,7 @@
 		<td>Taken Numbers</td>
 	</tr>
 	</thead>
+	<tbody>
 		<?php
 		$result = mysqli_query($mysqli, "
 		SELECT `I_ID`, `Course_Type`, `Begin_Time`, `Number_of_Period`-`Remaining_Number` FROM `course`, `appoint` WHERE `course`.`Course_ID`=`appoint`.`Course_ID` and `appoint`.`Status`='Checkin' 
@@ -43,6 +44,7 @@
 		  echo "</tr>";
 		}
 		?>
+	</tbody>
 </table>
 </div>
 	<script src="../js/bootstrap.min.js"></script>

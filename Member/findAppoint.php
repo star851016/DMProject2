@@ -9,8 +9,7 @@ require_once('database.php');
 	if (!$res1) {
  		die("sql error:\n" . $mysqli->error);
 	}	
-require_once('..\Member\appoint.php');
-
+require_once('..\Member\findBackend.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,13 +24,8 @@ require_once('..\Member\appoint.php');
 <body>
 <!-- Import nav bar -->
 <?php echo file_get_contents('../navbar_M.html'); ?>
-<div class="container">
-	<br>
-	<h1>Appointment</h1>
-	<br>
-	<div class="form-group row">
-	<div class="col-sm-8">
-	 <select class="form-control" onchange="csType()" id="ct">
+
+	 <select onchange="csType()" id="ct">
 	 	<option value <?php if (!isset($_SESSION["Course_ID"])) {echo "selected";}?>></option>
 		 <?php while($row1 = $res1->fetch_assoc()){ ?>
 		 	<!-- 如果課程ID有存入session，就將該課程ID預設被選 -->
@@ -45,27 +39,20 @@ require_once('..\Member\appoint.php');
 	        </option>
 	    <?php } ?>
 	</select>
-	</div>
-	<div class="col-sm-2">
-		<button class='btn btn-outline-secondary btn-sm' onclick="week(-1)">上一週</button>
-		<button class='btn btn-outline-secondary btn-sm' onclick="week(1)">下一週</button>	
-	</div>
-	
-	</div>
-	<table class="table table-hover">
-		<thead>
+	<button onclick="week(-1)">上一週</button>
+	<button onclick="week(1)">下一週</button>
+	<button onclick="location.href='index.php'">開始預約</button>
+	<table>
 		<tr>
-			<th>時段</td>
-			<th><?php  echo $Mon ; ?><br>一</th>
-			<th><?php  echo $Tues ; ?><br>二</th>
-			<th><?php  echo $Wed ; ?><br>三</th>
-			<th><?php  echo $Thru ; ?><br>四</th>
-			<th><?php  echo $Fri ; ?><br>五</th>
-			<th><?php  echo $Sat ; ?><br>六</th>
-			<th><?php  echo $Sun ; ?><br>七</th>
+			<td>時段</td>
+			<td><?php  echo $Mon ; ?><br>一</td>
+			<td><?php  echo $Tues ; ?><br>二</td>
+			<td><?php  echo $Wed ; ?><br>三</td>
+			<td><?php  echo $Thru ; ?><br>四</td>
+			<td><?php  echo $Fri ; ?><br>五</td>
+			<td><?php  echo $Sat ; ?><br>六</td>
+			<td><?php  echo $Sun ; ?><br>七</td>
 		</tr>
-		</thead>
-		<tbody>
 		<?php for ($i=1;$i<=11;$i++) { $btime = $i+8;$etime = $i+9;?>
 		<tr>
 			<td><?php echo $btime."-".$etime; ?></td>
@@ -76,15 +63,11 @@ require_once('..\Member\appoint.php');
 			<td><?php echo $_SESSION["W4_$i"];?></td>
 			<td><?php echo $_SESSION["W5_$i"];?></td>   
 			<td><?php echo $_SESSION["W6_$i"];?></td>   
-			<td><?php echo $_SESSION["W7_$i"];?></td>
+			<td><?php echo $_SESSION["W7_$i"];?></td>                      
 		</tr>
-
 		<?php } ?>
-		</tbody>
 		
-		<br>
 	</table>
-</div>
 	<!--BOOSTRAP-->
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -103,7 +86,7 @@ require_once('..\Member\appoint.php');
 			},
 			dataType: "text",
 			success: function(response) {
-				location.href = "index.php";
+				location.href = "findAppoint.php";
 			}
 		});	
 	}
@@ -117,7 +100,7 @@ require_once('..\Member\appoint.php');
 			},
 			dataType: "text",
 			success: function(response) {
-				location.href = "index.php";				
+				location.href = "findAppoint.php";				
 			}
 		});	
 	}
@@ -133,7 +116,7 @@ require_once('..\Member\appoint.php');
 			dataType: "text",
 			success: function(response) {
 				 alert(response);
-				location.href = "index.php";
+				location.href = "findAppoint.php";
 			}
 		});	
 	}
