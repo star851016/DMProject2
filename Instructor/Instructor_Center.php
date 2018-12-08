@@ -38,12 +38,6 @@
 	<!-- Import nav bar -->
 	<?php echo file_get_contents('../navbar_I.html'); ?>
 
-	<!-- Header 這邊需要砍掉喔 -->
-	<p>
-			<a href="index.php">Home</a> 
-			<a href="insert.php">Insert New Record</a> 
-			<a href="logout.php">Logout</a>
-	</p>
 		
 	<!--add  Period-->
 	<?php
