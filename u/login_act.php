@@ -1,7 +1,11 @@
 <?php
 	Session_start();
 	
-	$db_tool = new DB_Tool;
+	include "../backend/DB_Tool.php";
+	include "../backend/DB.php";
+	include "../backend/tool.php";
+
+	$db_Tool = new DB_Tool;
 	$db = &$db_tool->get_DB();
 	
 	$M_ID = isset($_POST['M_ID']) ? input_filter(strtolower($_POST['M_ID'])) : '';
@@ -25,14 +29,14 @@
 			$arr = $arrayName = array('status' => 1, 'msg' => urlencode('login successful！'));
 
 
-			$sql = "INSERT INTO log_login(M_ID) VALUES(?);";
+			$sql = "INSERT INTO log_login(M_ID, M_Name, M_Email, M_Address, M_Age, M_Phone, M_Gende, M_Password) VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
 			$std = $db->prepare($sql);
 			$std->execute(array($M_ID, GET_USER_IP(), True, get_date_time()));
 		}
 		else{
 			$arr = $arrayName = array('status' => 0, 'msg' => urlencode('account or password is wrong！'));
 
-			$sql = "INSERT INTO log_login(M_ID) VALUES(?)";
+			$sql = "INSERT INTO log_login(M_ID, M_Name, M_Email, M_Address, M_Age, M_Phone, M_Gende, M_Password) VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
 			$std = $db->prepare($sql);
 			$std->execute(array($M_ID, GET_USER_IP(), False, get_date_time()));
 		}

@@ -49,7 +49,8 @@
 
 </head>
 
-<body id="page-top" class="index">
+<body id="page-top" class="index">  
+<form action="test.php" method="POST">
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header page-scroll">
@@ -87,8 +88,9 @@
 		                		<div class="col-lg-4 col-sm-3"></div>
 		                		<div class="col-lg-4 col-sm-6">
 					                <label>Member ID</label>
-					                <input type="text" class="form-control" id="M_ID"></input>
-		                		</div>
+					                <input type="text" class="form-control" id="M_ID" name="username"></input>
+
+					                </div>
 		                		<div class="col-lg-4 col-sm-3"></div>
 		                	</div>
 
@@ -96,7 +98,7 @@
 		                		<div class="col-lg-4 col-sm-3"></div>
 		                		<div class="col-lg-4 col-sm-6">
 					                <label>Password</label>
-					                <input type="password" class="form-control" id="M_Password"></input>
+					                <input type="password" class="form-control" id="M_Password" name="password"></input>
 		                		</div>
 		                		<div class="col-lg-4 col-sm-3"></div>
 		                	</div>
@@ -122,8 +124,8 @@
 		                	<div class="row control-group">
 		                		<div class="col-lg-4 col-sm-3"></div>
 		                		<div class="col-lg-4 col-sm-6">
-					                <input type="button" class="form-control btn btn-info" id="btnLogin" value="LOGIN"></input>
-		                		</div>
+					                <input type="submit" class="form-control btn btn-info" id="btnLogin" value="Login" name="login"></input>
+					                </div>
 		                		<div class="col-lg-4 col-sm-3"></div>
 		                	</div>
 		                		<br>
@@ -169,18 +171,3 @@
     <?php echo $WEB_FCSS; ?>
     <?php echo $WEB_FJS; ?>
     <script type="text/javascript" src="../js/login.js"></script>
-
-
-
-
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<form name="form" method="post" action="connect.php">
-member ID：<input type="text" name="id" /> <br>
-password：<input type="password" name="pw" /> <br>
-<input type="submit" name="button" value="login" />&nbsp;&nbsp;
-
-</form>
-
-
-</body>
-</html>
