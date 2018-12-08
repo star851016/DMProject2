@@ -9,7 +9,7 @@
 	$res = $mysqli->query("INSERT INTO `appoint`(`I_ID`, `Course_ID`, `Begin_Time`, `Status`) 
 							VALUES ('$I_ID','$Course_ID','$Begin_Time','Appoint')
 						");
-	$mysqli->commit($con);
+	$mysqli->commit();
 	if ($res === TRUE) {
     	echo "預約成功";
 	} else {
