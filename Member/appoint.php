@@ -76,7 +76,7 @@
 
 			//動態產生前端資料表的變數
 			$_SESSION["W".$btWeekday."_".$btHrs] = $_SESSION["W".$btWeekday."_".$btHrs] 
-			. "<button onclick='apt(".date("YmdHis", strtotime("$Begin_Time")).",".$row['I_ID'].")'>預約"
+			. "<button class='btn btn-outline-secondary btn-sm' onclick='apt(".date("YmdHis", strtotime("$Begin_Time")).",".$row['I_ID'].")'>預約"
 			.$row['I_ID']."</button>";			
 		}
 	}

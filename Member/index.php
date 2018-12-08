@@ -27,8 +27,10 @@ require_once('..\Member\appoint.php');
 <?php echo file_get_contents('../navbar_M.html'); ?>
 <div class="container">
 	<br>
-	<div class="form-group">
-	 <label>Courese</label>
+	<h1>Appointment</h1>
+	<br>
+	<div class="form-group row">
+	<div class="col-sm-8">
 	 <select class="form-control" onchange="csType()" id="ct">
 	 	<option value <?php if (!isset($_SESSION["Course_ID"])) {echo "selected";}?>></option>
 		 <?php while($row1 = $res1->fetch_assoc()){ ?>
@@ -43,6 +45,12 @@ require_once('..\Member\appoint.php');
 	        </option>
 	    <?php } ?>
 	</select>
+	</div>
+	<div class="col-sm-2">
+		<button class='btn btn-outline-secondary btn-sm' onclick="week(-1)">上一週</button>
+		<button class='btn btn-outline-secondary btn-sm' onclick="week(1)">下一週</button>	
+	</div>
+	
 	</div>
 	<table class="table table-hover">
 		<thead>
@@ -68,13 +76,13 @@ require_once('..\Member\appoint.php');
 			<td><?php echo $_SESSION["W4_$i"];?></td>
 			<td><?php echo $_SESSION["W5_$i"];?></td>   
 			<td><?php echo $_SESSION["W6_$i"];?></td>   
-			<td><?php echo $_SESSION["W7_$i"];?></td>                      
+			<td><?php echo $_SESSION["W7_$i"];?></td>
 		</tr>
 
 		<?php } ?>
 		</tbody>
-		<button class='btn btn-outline-secondary btn-sm' onclick="week(-1)">上一週</button>
-		<button class='btn btn-outline-secondary btn-sm' onclick="week(1)">下一週</button>
+		
+		<br>
 	</table>
 </div>
 	<!--BOOSTRAP-->
