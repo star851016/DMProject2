@@ -2,7 +2,7 @@
 
 	Session_start();
 
-	if(isset($_SESSION['m_id']))
+	if(isset($_SESSION['M_ID']))
 	{
 		Session_destroy();
 	}
