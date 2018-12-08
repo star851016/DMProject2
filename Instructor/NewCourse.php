@@ -111,59 +111,89 @@ if (isset($_POST["Instructors1"])){
 
 <!-- Import nav bar -->
 <?php echo file_get_contents('../navbar_I.html'); ?>
-
+<div class="container">
+<br>
 <h1>New Course</h1>
-
+<hr>
 <!-- Input form -->
+
+<!--
+			<div class="form-group row">				
+				<label class="col-sm-2 col-form-label">名稱</label>
+				<div class="col-sm-3">
+					輸入框+ class="form-control"
+					
+				</div>
+			</div>
+
+
+-->
 <form action="NewCourse.php" method="POST">
-  <table border="0">
-  	<tr> <td>CourseType</td><td>
-        <input type="text" name="CourseType" maxlength="20" size="20"   value="基本重訓"/>
-    </td> </tr>
-  
-    <tr> <td>Instructors</td> <td>
-        <input type="text" name="Instructors1" maxlength="20" size="20"  value=1 />
-    </td> <td>
-        <input type="text" name="Instructors2" maxlength="20" size="20"  value=2 />
-    </td> <td>
-        <input type="text" name="Instructors3" maxlength="20" size="20"  value=3 />
-    </td> </tr>
-    
-	<tr> <td>Price</td><td>
-        <input type="text" name="Price" maxlength="20" size="20" value=30000 />
-    </td> </tr>
-
-    <tr> <td>Number of Period</td><td>
-        <input type="text" name="NumberofPeriod" maxlength="20" size="20"  value=24 />
-    </td> </tr>
-  
-    <tr> <td>Student</td><td>
-        <input type="text" name="Student" maxlength="20" size="20"   value=1 />
-    </td> </tr>
-	  
-    <tr> <td>Student's Password</td><td>
-        <input type="text" name="StudentPassword" maxlength="20" size="20" value=1234 />
-    </td> </tr>
-	  
-    <tr> <td>Add Data</td><td>
-        <input type="submit" value="Add Data" />
-    </td> </tr>
-	  
-  </table>
-</form>
-
+	<div class="container">
+			<div class="form-group row">				
+				<label class="col-sm-2 col-form-label">CourseType</label>
+				<div class="col-sm-3">
+					<input class="form-control" type="text" name="CourseType" value="基本重訓"/>
+				</div>
+			</div>
+			<div class="form-group row">				
+				<label class="col-sm-2 col-form-label">Instructors</label>
+				<div class="col-sm-3">
+					<input class="form-control" type="text" name="Instructors1"value=1 />
+				</div>
+				<div class="col-sm-3">
+					<input class="form-control" type="text" name="Instructors2"value=2 />
+				</div>
+				<div class="col-sm-3">
+					<input class="form-control" type="text" name="Instructors3" value=3 />
+				</div>
+			</div>
+			<div class="form-group row">				
+				<label class="col-sm-2 col-form-label">Price</label>
+				<div class="col-sm-3">
+					<input class="form-control" type="text" name="Price" value=30000 />
+				</div>
+			</div>
+			<div class="form-group row">				
+				<label class="col-sm-2 col-form-label">Number of Period</label>
+				<div class="col-sm-3">
+					<input class="form-control" type="text" name="NumberofPeriod"  value=24 />
+				</div>
+			</div>
+			<div class="form-group row">				
+				<label class="col-sm-2 col-form-label">Student</label>
+				<div class="col-sm-3">
+					<input class="form-control" type="text" name="Student" value=1 />
+				</div>
+			</div>
+			<div class="form-group row">				
+				<label class="col-sm-2 col-form-label">Student's Password</label>
+				<div class="col-sm-3">
+					<input class="form-control" type="text" name="StudentPassword" value=1234 />
+				</div>
+			</div>
+			<div class="form-group row">				
+				<label class="col-sm-2 col-form-label"></label>
+				<div class="col-sm-3">
+					<input class='btn btn-outline-secondary btn-sm' type="submit" value="Submit" />
+				</div>
+			</div>
+	</div>
+<hr>
 <!-- Display table data. -->
-<table border="1" cellpadding="2" cellspacing="2">
+<table class="table table-hover">
+	<thead>
 	<tr>
-		<td>Course</td>
-		<td>Instructors</td>
-		<td>Price</td>
-		<td>Course Type</td>
-		<td>Number of Period</td>
-		<td>Remaining Number</td>
-		<td>Student</td>
+		<th>Course</th>
+		<th>Instructors</th>
+		<th>Price</th>
+		<th>Course Type</th>
+		<th>Number of Period</th>
+		<th>Remaining Number</th>
+		<th>Student</th>
 	</tr>
-	  
+	</thead>
+	<tbody>  
 	<?php
 
 		$result = mysqli_query($mysqli, "SELECT course.Course_ID, GROUP_CONCAT(compose.I_ID SEPARATOR '+'), Price, Course_Type, Number_of_Period, Remaining_Number, course.M_ID
@@ -185,8 +215,9 @@ if (isset($_POST["Instructors1"])){
 		  echo "</tr>";
 		}
 	?>  
-  
+  	</tbody>
 </table>
+</div>
 	<!--BOOSTRAP樣式-->
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
