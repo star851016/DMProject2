@@ -46,10 +46,23 @@
 			$Period_Date = $_POST["Period_Date"];
 			$time = $_POST ["time"];	
 			
+			
+			#法1:用for迴圈
+			print($Instructor_Begin_Time);
+			
 			for($j=0 ; $j< count($time) ; $j++){
 				$Begin_Time = $Period_Date.' '.$time[$j];
 				AddPeriod($mysqli, $Instructor, $Begin_Time);
 				print($Begin_Time.'<br>');
+			}
+			
+			#法2:字串合併，呼叫一次MySQL
+			for($j=0 ; $j< count($time) ; $j++){
+				if ($j == 0){ 
+					$Instructor_Begin_Time = '('.$Instructor.",'".$Period_Date.' '.$time[$j]."')";
+				}else{
+					$Instructor_Begin_Time = $Instructor_Begin_Time.', ('.$Instructor.",'".$Period_Date.' '.$time[$j]."')";
+				}
 			}
 			
 		}
