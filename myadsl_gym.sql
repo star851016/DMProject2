@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機: 127.0.0.1
--- 產生時間： 2018 年 12 月 06 日 11:26
+-- 產生時間： 2018 年 12 月 08 日 13:56
 -- 伺服器版本: 10.1.36-MariaDB
 -- PHP 版本： 7.2.11
 
@@ -21,6 +21,45 @@ SET time_zone = "+00:00";
 --
 -- 資料庫： `myadsl_gym`
 --
+
+DELIMITER $$
+--
+-- Procedure
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `apt` (IN `mID` INT(6), IN `cID` INT(6))  BEGIN
+            	START TRANSACTION;
+            	SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+            	CREATE TEMPORARY TABLE mnotFr as
+        SELECT  a.Begin_Time,a.Course_ID,a.status
+        FROM appoint a,course c
+        WHERE a.Course_ID = c.Course_ID
+        AND c.M_ID = mID
+        AND a.status = 'Appoint';
+       
+        CREATE TEMPORARY TABLE inByCourse as
+        select  I_ID
+        FROM compose c
+        where c.Course_ID = cID;
+       
+        CREATE TEMPORARY TABLE perByIn as
+        SELECT p.I_ID,p.Begin_Time
+        from period p, inByCourse t
+        where p.I_ID = t.I_ID;
+       
+        CREATE TEMPORARY TABLE inFree as
+        SELECT p.I_ID,p.Begin_Time
+        FROM perByIn p
+        left outer join appoint a on (a.I_ID = p.I_ID and a.Begin_Time = p.Begin_Time)
+        where status = 'Cancel' or status is null;
+ 
+            	SELECT i.I_ID,i.Begin_Time
+        FROM inFree i
+        left outer join mnotFr m on (m.Begin_Time = i.Begin_Time)
+        where m.status is null;
+            	COMMIT;  	
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -40,11 +79,14 @@ CREATE TABLE `appoint` (
 --
 
 INSERT INTO `appoint` (`Course_ID`, `I_ID`, `Begin_Time`, `Status`) VALUES
+(1, 1, '2018-11-13 09:00:00', 'Absent'),
 (1, 2, '2018-12-18 19:00:00', 'Checkin'),
 (2, 1, '2018-11-18 19:00:00', 'Absent'),
 (2, 1, '2018-12-05 15:00:00', 'Absent'),
 (2, 1, '2018-12-05 16:00:00', 'Absent'),
-(2, 1, '2018-12-05 17:00:00', 'Absent');
+(2, 1, '2018-12-05 17:00:00', 'Absent'),
+(9, 2, '2018-11-14 13:00:00', 'Absent'),
+(9, 2, '2018-11-16 12:00:00', 'Absent');
 
 --
 -- 觸發器 `appoint`
@@ -81,16 +123,28 @@ INSERT INTO `compose` (`I_ID`, `Course_ID`) VALUES
 (1, 4),
 (1, 5),
 (1, 6),
+(1, 7),
+(1, 8),
+(1, 9),
+(1, 10),
 (2, 1),
 (2, 2),
 (2, 3),
 (2, 4),
 (2, 6),
+(2, 7),
+(2, 8),
+(2, 9),
+(2, 10),
 (3, 1),
 (3, 3),
 (3, 4),
 (3, 5),
-(3, 6);
+(3, 6),
+(3, 7),
+(3, 8),
+(3, 9),
+(3, 10);
 
 -- --------------------------------------------------------
 
@@ -113,12 +167,29 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`Course_ID`, `M_ID`, `Price`, `Course_Type`, `Number_of_Period`, `Remaining_Number`, `Open_Time`) VALUES
-(1, 1, 3000, '搏擊', 25, 23, '2018-12-05 11:16:21'),
-(2, 2, 5000, '重訓', 40, 40, '2018-12-05 11:16:21'),
+(1, 1, 3000, '搏擊', 25, 22, '2018-12-05 11:16:21'),
+(2, 2, 5000, '重訓', 40, 39, '2018-12-05 11:16:21'),
 (3, 1, 30000, '基本重訓', 24, 24, '2018-12-05 11:16:21'),
 (4, 1, 30000, '基本重訓', 24, 24, '2018-12-05 11:16:21'),
 (5, 1, 30000, '基本重訓', 24, 24, '2018-12-05 11:16:21'),
-(6, 1, 30000, '基本重訓', 24, 24, '2018-12-05 11:16:21');
+(6, 1, 30000, '基本重訓', 24, 24, '2018-12-05 11:16:21'),
+(7, 1, 30000, '基本重訓2', 24, 24, '2018-12-07 23:18:20'),
+(8, 1, 30000, '基本重訓', 24, 24, '2018-12-08 17:04:31'),
+(9, 1, 30000, '基本重訓', 24, 22, '2018-12-08 17:14:55'),
+(10, 1, 30000, '基本重訓', 24, 24, '2018-12-08 17:24:20');
+
+-- --------------------------------------------------------
+
+--
+-- 替換檢視表以便查看 `ifree`
+-- (請參考以下實際畫面)
+--
+CREATE TABLE `ifree` (
+`I_ID` int(6)
+,`Begin_Time` datetime
+,`Course_ID` int(6)
+,`Status` char(15)
+);
 
 -- --------------------------------------------------------
 
@@ -191,8 +262,23 @@ CREATE TABLE `member` (
 --
 
 INSERT INTO `member` (`M_ID`, `M_Name`, `M_Email`, `M_Address`, `M_Age`, `M_Phone`, `M_Gender`, `M_Password`) VALUES
-(1, '達達', 'MM.gamil.com', 'Keelung', 25, '0987654321', 'M', '1234'),
-(2, '小麥', 'SMM.gamil.com', 'WuGu', 25, '0912654321', 'M', '1234');
+(1, '小麥', 'MM.gamil.com', 'Keelung', 25, '0987654321', 'M', '1234'),
+(2, '達達', 'SMM.gamil.com', 'WuGu', 25, '0912654321', 'M', '1234'),
+(5, '玲', '', NULL, NULL, '', NULL, '5678');
+
+-- --------------------------------------------------------
+
+--
+-- 替換檢視表以便查看 `mnotfree`
+-- (請參考以下實際畫面)
+--
+CREATE TABLE `mnotfree` (
+`I_ID` int(6)
+,`Course_ID` int(6)
+,`Begin_Time` datetime
+,`Status` char(15)
+,`M_ID` int(6)
+);
 
 -- --------------------------------------------------------
 
@@ -239,6 +325,9 @@ INSERT INTO `period` (`I_ID`, `Begin_Time`) VALUES
 (1, '2018-12-05 17:00:00'),
 (1, '2018-12-05 18:00:00'),
 (1, '2018-12-05 19:00:00'),
+(1, '2018-12-07 12:00:00'),
+(1, '2018-12-07 13:00:00'),
+(1, '2018-12-18 19:00:00'),
 (1, '2018-12-18 20:00:00'),
 (1, '2018-12-19 00:00:00'),
 (1, '2018-12-20 12:00:00'),
@@ -253,6 +342,24 @@ INSERT INTO `period` (`I_ID`, `Begin_Time`) VALUES
 (3, '2018-12-18 19:00:00'),
 (3, '2018-12-18 21:00:00'),
 (3, '2018-12-21 09:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- 檢視表結構 `ifree`
+--
+DROP TABLE IF EXISTS `ifree`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ifree`  AS  select `p`.`I_ID` AS `I_ID`,`p`.`Begin_Time` AS `Begin_Time`,`a`.`Course_ID` AS `Course_ID`,`a`.`Status` AS `Status` from (`period` `p` left join `appoint` `a` on(((`a`.`I_ID` = `p`.`I_ID`) and (`a`.`Begin_Time` = `p`.`Begin_Time`)))) where ((`a`.`Status` = 'Cancel') or isnull(`a`.`Status`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- 檢視表結構 `mnotfree`
+--
+DROP TABLE IF EXISTS `mnotfree`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `mnotfree`  AS  select `a`.`I_ID` AS `I_ID`,`a`.`Course_ID` AS `Course_ID`,`a`.`Begin_Time` AS `Begin_Time`,`a`.`Status` AS `Status`,`c`.`M_ID` AS `M_ID` from (`appoint` `a` join `course` `c`) where ((`a`.`Course_ID` = `c`.`Course_ID`) and (`a`.`Status` = 'Appoint')) ;
 
 -- --------------------------------------------------------
 
@@ -321,7 +428,7 @@ ALTER TABLE `period`
 -- 使用資料表 AUTO_INCREMENT `course`
 --
 ALTER TABLE `course`
-  MODIFY `Course_ID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Course_ID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- 使用資料表 AUTO_INCREMENT `instructor`
@@ -333,7 +440,7 @@ ALTER TABLE `instructor`
 -- 使用資料表 AUTO_INCREMENT `member`
 --
 ALTER TABLE `member`
-  MODIFY `M_ID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `M_ID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- 已匯出資料表的限制(Constraint)
