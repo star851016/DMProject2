@@ -15,18 +15,22 @@ require_once('database.php');
 <body>
 	<!-- Import nav bar -->
 	<?php echo file_get_contents('../navbar_I.html'); ?>
-	
-	<h3>monthly kpi report</h3> 
-	
-	<table border="1" cellpadding="2" cellspacing="2">
+<br>
+<div class="container">
+	<h3>Monthly KPI Report</h3> 
+</div>
+<div class="container">	
+	<table class="table table-hover" cellpadding="2" cellspacing="2">
+		<thead>
 			<tr>
 				<td>instructor ID</td>
 				<td>instructor Name</td>
 				<td>KPI ID</td>
 				<td>Amount Standard</td>
-				<td>ThisMounthSaleAmount</td>
+				<td>Sale Amount</td>
 			</tr>
-	  
+    	</thead>
+		<tbody>
 		<?php
 		$result = mysqli_query($mysqli, "SELECT * FROM `monthly_kpi_report`
 			"); 
@@ -40,9 +44,9 @@ require_once('database.php');
 		  echo "</tr>";
 		}
 		?>  
-	  
+	  	</tbody>
 	</table>
-	
+</div>	
 	<!--BOOSTRAP樣式-->
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
