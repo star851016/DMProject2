@@ -52,7 +52,11 @@
 	}
 
 	$M_ID = 1;
-
+	if ($Start > $getdate){
+		$BookStart = $Start;
+	} else {
+		$BookStart = $getdate;
+	}
 	// 如果課程ID有存入session，就去資料庫查詢所有教練有空的時間
 	if (isset($_SESSION["Course_ID"])) {
 		$Course_ID = $_SESSION["Course_ID"];
@@ -62,7 +66,7 @@
 								left outer join (SELECT * FROM mnotfree WHERE M_ID = $M_ID) m
 								on (m.Begin_Time = i.Begin_Time)
 								where m.Status is null
-								and i.Begin_Time BETWEEN '$getdate' AND '$End 23:59:59'
+								and i.Begin_Time BETWEEN '$BookStart' AND '$End 23:59:59'
 							");	
 		while($row = $res->fetch_assoc()){
 			$Begin_Time=$row['Begin_Time'];	
