@@ -12,7 +12,7 @@
 		$AC_S = mysqli_real_escape_string($connection, $Student);
 		$AC_SP = mysqli_real_escape_string($connection, $StudentPassword);
 
-		$query1_INSERT = "INSERT INTO `Course` (`M_ID`, `Price`, `Course_Type`, `Number_of_Period`, `Remaining_Number` ) VALUES ('$AC_S', '$AC_P', '$AC_CT', '$AC_NS', '$AC_NS');";
+		$query1_INSERT = "INSERT INTO `course` (`M_ID`, `Price`, `Course_Type`, `Number_of_Period`, `Remaining_Number` ) VALUES ('$AC_S', '$AC_P', '$AC_CT', '$AC_NS', '$AC_NS');";
 
 		if(!mysqli_query($connection, $query1_INSERT)) echo("<p>Error adding Course data.</p>");
 
@@ -69,20 +69,20 @@ if (isset($_POST["Instructors1"])){
 		
 		#Check The Instructors EXISTS
 		if (strlen($Instructors1)) {
-		$query1_select = "SELECT 1 FROM Instructor WHERE I_ID = $Instructors1";
+		$query1_select = "SELECT 1 FROM instructor WHERE I_ID = $Instructors1";
 		if(!mysqli_fetch_row(mysqli_query($mysqli, $query1_select))) $ErrorReason[] = "NO Instructors:".$Instructors1."." ;
 		}
 		if (strlen($Instructors2)) {
-		$query2_select = "SELECT 1 FROM Instructor WHERE I_ID = $Instructors2";
+		$query2_select = "SELECT 1 FROM instructor WHERE I_ID = $Instructors2";
 		if(!mysqli_fetch_row(mysqli_query($mysqli, $query2_select))) $ErrorReason[] = "NO Instructors:".$Instructors2."." ;
 		}
 		if (strlen($Instructors3)) {
-		$query3_select = "SELECT 1 FROM Instructor WHERE I_ID = $Instructors3";
+		$query3_select = "SELECT 1 FROM instructor WHERE I_ID = $Instructors3";
 		if(!mysqli_fetch_row(mysqli_query($mysqli, $query3_select))) $ErrorReason[] = "NO Instructors:".$Instructors3."." ;
 		}
 			
 		#Check The M_Password is Correct
-		$query0_select = "select member.M_Password FROM `member` WHERE Member.M_ID = $Student "; 
+		$query0_select = "select member.M_Password FROM `member` WHERE member.M_ID = $Student "; 
 		$result0_SP = mysqli_fetch_row(mysqli_query($mysqli,  $query0_select))[0]; 
 		if($result0_SP != $StudentPassword) $ErrorReason[] = "Wrong Student ID or Student Password(".$StudentPassword."). Correct Password:".$result0_SP ;
 	
