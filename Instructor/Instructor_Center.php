@@ -37,8 +37,8 @@
 <body>
 	<!-- Import nav bar -->
 	<?php echo file_get_contents('../navbar_I.html'); ?>
-
-		
+<br>
+<div class="container">
 	<!--add  Period-->
 	<?php
 		if (isset($_POST["Period_Date"])){
@@ -72,19 +72,21 @@
 	?>
 	
 	<!--show all Course-->
-	<h2>all Courses</h2>
-	<table border="1" cellpadding="2" cellspacing="2">
+	<h2>Course List</h2>
+	<table class="table table-hover"  cellpadding="2" cellspacing="2">
+		<thead>
 			<tr>
-				<td>instructor ID</td>
-				<td>instructor Name</td>
-				<td>Course_ID</td>
-				<td>M_ID</td>
-				<td>Price</td>
-				<td>Course_Type</td>
-				<td>Number_of_Period</td>
-				<td>Remaining_Number</td>
+				<th>instructor ID</th>
+				<th>instructor Name</th>
+				<th>Course_ID</th>
+				<th>M_ID</th>
+				<th>Price</th>
+				<th>Course_Type</th>
+				<th>Number_of_Period</th>
+				<th>Remaining_Number</th>
 			</tr>
-	  
+	  	</thead>
+	  	<tbody>
 		<?php
 		$result = mysqli_query($mysqli, "SELECT instructor.I_ID, instructor.I_Name, course.Course_ID, course.M_ID, course.Price, course.Course_Type, course.Number_of_Period, course.Remaining_Number FROM course, compose,instructor WHERE course.Course_ID = compose.Course_ID AND compose.I_ID = instructor.I_ID AND instructor.I_ID = $Instructor AND course.Remaining_Number > 0;
 			"); 
@@ -101,22 +103,23 @@
 		  echo "</tr>";
 		}
 		?>  
-	  
+	  	</tbody>
 	</table>
-	
+	<br>
+	<hr>
+	<br>
 	<!--show all period-->
 
 	  
 	<div class="form">
 
-		<h2>all period</h2>
-		
-		<table width="100%" border="1" style="border-collapse:collapse;">
+		<h2>Period List</h2>
+		<table class="table table-hover">
 			<thead>
 				<tr>
-				<th><strong>I_ID</strong></th>
-				<th><strong>Begin_Time</strong></th>
-				<th><strong>Delete</strong></th>
+				<th>I_ID</th>
+				<th>Begin_Time</th>
+				<th>Delete</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -127,9 +130,9 @@
 					while($row = mysqli_fetch_assoc($result)) { 
 				?>
 				<tr>
-					<td align="center"><?php echo $row["I_ID"]; ?></td>
-					<td align="center"><?php echo $row["Begin_Time"]; ?></td>
-					<td align="center">
+					<td><?php echo $row["I_ID"]; ?></td>
+					<td><?php echo $row["Begin_Time"]; ?></td>
+					<td>
 						<a href="Delete.php?id=<?php echo $row["I_ID"].",'".$row["Begin_Time"]."'"; ?>"><?php 
 							#如果["Status"]不等於'appoint'，代表該時段沒被預約<才可以刪除
 							if(!$row["Status"]=='appoint'){ echo 'Delete'; }else{echo '' ;};
@@ -141,7 +144,7 @@
 			</tbody>
 		</table>
 	</div>
-
+</div>
 <!--BOOSTRAP樣式-->
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
