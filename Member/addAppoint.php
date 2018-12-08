@@ -6,7 +6,7 @@
 	$Begin_Time = date("Y-m-d H:i:s", strtotime("$Begin_Time"));
 	$I_ID = $_POST["I_ID"];
 	$Course_ID = $_SESSION["Course_ID"];
-	$res = $mysqli->query("INSERT INTO `appoint`(`I_ID`, `Course_ID`, `Begin_Time`, `If_Checkin`) 
+	$res = $mysqli->query("INSERT INTO `appoint`(`I_ID`, `Course_ID`, `Begin_Time`, `Status`) 
 							VALUES ('$I_ID','$Course_ID','$Begin_Time','Appoint')
 						");
 	$up =  $mysqli->query("UPDATE `course` 
