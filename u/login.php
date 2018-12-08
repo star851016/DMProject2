@@ -27,7 +27,7 @@
 		    position: relative;
 		}
 
-		section .container{
+		section .container {
 			padding-top: 30px;
 			padding-bottom: 177px;
 		}
@@ -87,7 +87,7 @@
 		                		<div class="col-lg-4 col-sm-3"></div>
 		                		<div class="col-lg-4 col-sm-6">
 					                <label>Member ID</label>
-					                <input type="text" class="form-control" id="SID"></input>
+					                <input type="text" class="form-control" id="M_ID"></input>
 		                		</div>
 		                		<div class="col-lg-4 col-sm-3"></div>
 		                	</div>
@@ -95,8 +95,8 @@
 		                	<div class="row control-group">
 		                		<div class="col-lg-4 col-sm-3"></div>
 		                		<div class="col-lg-4 col-sm-6">
-					                <label>PASSWORD</label>
-					                <input type="password" class="form-control" id="Password"></input>
+					                <label>Password</label>
+					                <input type="password" class="form-control" id="M_Password"></input>
 		                		</div>
 		                		<div class="col-lg-4 col-sm-3"></div>
 		                	</div>
@@ -131,6 +131,8 @@
 		                		<div class="col-lg-4 col-sm-3"></div>
 		                		<div class="col-lg-4 col-sm-6">
 					                <label><a>Forget Password?</a></label>
+					                <label><a href="register.php">Register</a></label>
+          
 		                		</div>
 		                		<div class="col-lg-4 col-sm-3"></div>
 		                	</div>
@@ -167,8 +169,18 @@
     <?php echo $WEB_FCSS; ?>
     <?php echo $WEB_FJS; ?>
     <script type="text/javascript" src="../js/login.js"></script>
-    
+
+
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<form name="form" method="post" action="connect.php">
+member ID：<input type="text" name="id" /> <br>
+password：<input type="password" name="pw" /> <br>
+<input type="submit" name="button" value="login" />&nbsp;&nbsp;
+
+</form>
+
+
 </body>
 </html>
-
-
