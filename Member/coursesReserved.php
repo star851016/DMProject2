@@ -21,7 +21,7 @@
 </div>
 <div class="container">
 <!-- Display table data. -->
-<table  class="table table-hover" border="1" cellpadding="2" cellspacing="2">
+<table  class="table table-hover" cellpadding="2" cellspacing="2">
 	  <thead>
 		<tr>
 		<th>Instructor ID</th>
