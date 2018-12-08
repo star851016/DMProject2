@@ -48,7 +48,6 @@
 			
 			
 			#法1:用for迴圈
-			print($Instructor_Begin_Time);
 			
 			for($j=0 ; $j< count($time) ; $j++){
 				$Begin_Time = $Period_Date.' '.$time[$j];
@@ -60,10 +59,26 @@
 			for($j=0 ; $j< count($time) ; $j++){
 				if ($j == 0){ 
 					$Instructor_Begin_Time = '('.$Instructor.",'".$Period_Date.' '.$time[$j]."')";
+					#$Instructor_Begin_Time = '('.$Instructor.','.$Period_Date.' '.$time[$j].')';					
 				}else{
-					$Instructor_Begin_Time = $Instructor_Begin_Time.', ('.$Instructor.",'".$Period_Date.' '.$time[$j]."')";
+					$Instructor_Begin_Time = $Instructor_Begin_Time.',('.$Instructor.",'".$Period_Date.' '.$time[$j]."')";
+					#$Instructor_Begin_Time = $Instructor_Begin_Time.',('.$Instructor.",".$Period_Date.' '.$time[$j].")";
 				}
+				
+				
+				if ($j == 0){ 
+					$chainBegin_Time = '('."'".$Period_Date.' '.$time[$j]."')";
+				}else{
+					$chainBegin_Time = $chainBegin_Time.', ('."'".$Period_Date.' '.$time[$j]."')";
+				}
+				
 			}
+			#print($Instructor_Begin_Time);
+			#$query2_INSERT = "INSERT INTO `TTT`(`I_ID`, `Begin_Time`) VALUES ".$Instructor_Begin_Time;
+			$query2_INSERT = "INSERT INTO `TTT`(`I_ID`, `Begin_Time`) VALUES ".$Instructor_Begin_Time;
+
+			print($query2_INSERT);
+			#print($chainBegin_Time);
 			
 		}
 		
