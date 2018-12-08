@@ -2,7 +2,7 @@
 require_once('database.php');
 	//查詢該會員所有課程
 	$res1 = $mysqli->query("select Course_Type,Course_ID
-							from Course as c , Member as m
+							from course as c , member as m
 							where 	m.M_ID = c.M_ID and m.M_ID = '1'
 							and c.Remaining_Number > 0
 						");
