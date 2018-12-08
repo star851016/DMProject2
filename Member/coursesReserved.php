@@ -12,20 +12,26 @@
 </head>
 
 <body>
-
 <!-- Import nav bar -->
 <?php echo file_get_contents('../navbar_M.html'); ?>
 
-<h1>Courses Reserved</h1>
+<div class="container">
+	<br>
+	<h1>Courses Reserved</h1>
+</div>
+<div class="container">
 <!-- Display table data. -->
-<table border="1" cellpadding="2" cellspacing="2">
+<table  class="table table-hover" border="1" cellpadding="2" cellspacing="2">
+	  <thead>
 		<tr>
-		<td>Instructor ID</td>
-		<td>Course Type</td>
-		<td>Begin Time</td>
-		<td>Checkin</td>
-		<td>Delete</td>
+		<th>Instructor ID</th>
+		<th>Course Type</th>
+		<th>Begin Time</th>
+		<th>Checkin</th>
+		<th>Cancel</th>
 		</tr>
+	  </thead>
+  	  <tbody>
 		<?php
 		/* 
 		SQL：
@@ -45,8 +51,8 @@
 		  echo "<td>",$query_data[0], "</td>",
 			   "<td>",$query_data[1], "</td>",
 			   "<td>",$query_data[2], "</td>";
-		  echo "<td> <button type='button'>Roll in</button> </td>";
-		  echo "<td> <button type='button'>Cancel</button> </td>";
+		  echo "<td> <button type='button' class='btn btn-outline-secondary btn-sm'>報到</button> </td>";
+		  echo "<td> <button type='button' class='btn btn-outline-secondary btn-sm'>取消</button> </td>";
 		  echo "</tr>";
 		}
 
@@ -54,7 +60,9 @@
 		//刪除：更新Status: Cancel (上面SQL抓Course_ID, I_ID, Begin_Time的值存入變數，按下按鈕再透過這些變數去改變相對應STATUS的值)
 
 		?>
-
+	  </tbody>
+</table>
+</div>
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
