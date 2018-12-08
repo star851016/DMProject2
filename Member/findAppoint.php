@@ -9,8 +9,7 @@ require_once('database.php');
 	if (!$res1) {
  		die("sql error:\n" . $mysqli->error);
 	}	
-require_once('..\Member\appoint.php');
-
+require_once('..\Member\findBackend.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -42,6 +41,7 @@ require_once('..\Member\appoint.php');
 	</select>
 	<button onclick="week(-1)">上一週</button>
 	<button onclick="week(1)">下一週</button>
+	<button onclick="location.href='index.php'">開始預約</button>
 	<table>
 		<tr>
 			<td>時段</td>
@@ -86,7 +86,7 @@ require_once('..\Member\appoint.php');
 			},
 			dataType: "text",
 			success: function(response) {
-				location.href = "index.php";
+				location.href = "findAppoint.php";
 			}
 		});	
 	}
@@ -100,7 +100,7 @@ require_once('..\Member\appoint.php');
 			},
 			dataType: "text",
 			success: function(response) {
-				location.href = "index.php";				
+				location.href = "findAppoint.php";				
 			}
 		});	
 	}
@@ -116,7 +116,7 @@ require_once('..\Member\appoint.php');
 			dataType: "text",
 			success: function(response) {
 				 alert(response);
-				location.href = "index.php";
+				location.href = "findAppoint.php";
 			}
 		});	
 	}

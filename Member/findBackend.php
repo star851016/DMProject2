@@ -60,9 +60,8 @@
 	// 如果課程ID有存入session，就去資料庫查詢所有教練有空的時間
 	if (isset($_SESSION["Course_ID"])) {
 		$Course_ID = $_SESSION["Course_ID"];
-		$mysqli->autocommit(FALSE);
 		$res = $mysqli->query("
-								call apt($M_ID,$Course_ID);
+								call find($M_ID,$Course_ID);
 							");	
 		while($row = $res->fetch_assoc()){
 			$Begin_Time=$row['Begin_Time'];	
@@ -76,9 +75,10 @@
 
 			//動態產生前端資料表的變數
 			$_SESSION["W".$btWeekday."_".$btHrs] = $_SESSION["W".$btWeekday."_".$btHrs] 
-			. "<button onclick='apt(".date("YmdHis", strtotime("$Begin_Time")).",".$row['I_ID'].")'>預約"
-			.$row['I_ID']."</button>";			
+			. "預約"
+			.$row['I_ID'];			
 		}
 	}
+
 
 ?>
