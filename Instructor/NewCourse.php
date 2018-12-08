@@ -166,11 +166,11 @@ if (isset($_POST["Instructors1"])){
 	  
 	<?php
 
-		$result = mysqli_query($mysqli, "SELECT Course.Course_ID, GROUP_CONCAT(compose.I_ID SEPARATOR '+'), Price, Course_Type, Number_of_Period, Remaining_Number, Course.M_ID
-		FROM `Course`, `member`, `compose`
-		WHERE Course.M_ID = Member.M_ID AND Course.Course_ID = compose.Course_ID
-		GROUP BY Course.Course_ID
-		ORDER BY Course.Course_ID DESC;
+		$result = mysqli_query($mysqli, "SELECT course.Course_ID, GROUP_CONCAT(compose.I_ID SEPARATOR '+'), Price, Course_Type, Number_of_Period, Remaining_Number, course.M_ID
+		FROM `course`, `member`, `compose`
+		WHERE course.M_ID = member.M_ID AND course.Course_ID = compose.Course_ID
+		GROUP BY course.Course_ID
+		ORDER BY course.Course_ID DESC;
 		"); 
 
 		while($query_data = mysqli_fetch_row($result)) {
