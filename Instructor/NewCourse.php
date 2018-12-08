@@ -17,15 +17,15 @@
 		if(!mysqli_query($connection, $query1_INSERT)) echo("<p>Error adding Course data.</p>");
 
 		if (strlen($AC_I1)) {
-		   $query2_INSERT = "INSERT INTO `Compose` (`I_ID`, `Course_ID`) VALUES ('$AC_I1', LAST_INSERT_ID());";
+		   $query2_INSERT = "INSERT INTO `compose` (`I_ID`, `Course_ID`) VALUES ('$AC_I1', LAST_INSERT_ID());";
 		   if(!mysqli_query($connection, $query2_INSERT)) echo("<p>Error adding Instructors1 in Compose data.</p>");
 		}
 		if (strlen($AC_I2)) {
-		   $query3_INSERT = "INSERT INTO `Compose` (`I_ID`, `Course_ID`) VALUES ('$AC_I2', LAST_INSERT_ID());";
+		   $query3_INSERT = "INSERT INTO `compose` (`I_ID`, `Course_ID`) VALUES ('$AC_I2', LAST_INSERT_ID());";
 		   if(!mysqli_query($connection, $query3_INSERT)) echo("<p>Error adding Instructors2 in Compose data.</p>");
 		}
 		if (strlen($AC_I3)) {
-		   $query4_INSERT = "INSERT INTO `Compose` (`I_ID`, `Course_ID`) VALUES ('$AC_I3', LAST_INSERT_ID());";
+		   $query4_INSERT = "INSERT INTO `compose` (`I_ID`, `Course_ID`) VALUES ('$AC_I3', LAST_INSERT_ID());";
 		   if(!mysqli_query($connection, $query4_INSERT)) echo("<p>Error adding Instructors3 in Compose data.</p>");
 		}
 		   
