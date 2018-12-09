@@ -27,7 +27,7 @@ require_once('..\Member\appoint.php');
 <?php echo file_get_contents('../navbar_M.html'); ?>
 <div class="container">
 	<br>
-	<h1>Appointment</h1>
+	<h1>Make an Appointment</h1>
 	<br>
 	<div class="form-group row">
 	<div class="col-sm-8">
@@ -55,7 +55,7 @@ require_once('..\Member\appoint.php');
 	<table class="table table-hover">
 		<thead>
 		<tr>
-			<th>時段</td>
+			<th>時段</th>
 			<th><?php  echo $Mon ; ?><br>一</th>
 			<th><?php  echo $Tues ; ?><br>二</th>
 			<th><?php  echo $Wed ; ?><br>三</th>

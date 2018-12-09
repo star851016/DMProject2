@@ -24,8 +24,14 @@ require_once('..\Member\findBackend.php');
 <body>
 <!-- Import nav bar -->
 <?php echo file_get_contents('../navbar_M.html'); ?>
+	<div class="container">
+	<br>
+	<h1>Search Periods</h1>
+	<br>
+	<div class="form-group row">
+	<div class="col-sm-7">
 
-	 <select onchange="csType()" id="ct">
+	 <select class="form-control" onchange="csType()" id="ct">
 	 	<option value <?php if (!isset($_SESSION["Course_ID"])) {echo "selected";}?>></option>
 		 <?php while($row1 = $res1->fetch_assoc()){ ?>
 		 	<!-- 如果課程ID有存入session，就將該課程ID預設被選 -->
@@ -39,20 +45,29 @@ require_once('..\Member\findBackend.php');
 	        </option>
 	    <?php } ?>
 	</select>
-	<button onclick="week(-1)">上一週</button>
-	<button onclick="week(1)">下一週</button>
-	<button onclick="location.href='index.php'">開始預約</button>
-	<table>
+	</div>
+	<div class="col-sm-3">
+	<button class='btn btn-outline-secondary btn-sm' onclick="week(-1)">上一週</button>
+	<button class='btn btn-outline-secondary btn-sm' onclick="week(1)">下一週</button>
+	<button class='btn btn-outline-secondary btn-sm'onclick="location.href='index.php'">開始預約</button>
+	</div>
+	</div>
+	<br>
+
+	<table  class="table table-hover">
+		<thead>
 		<tr>
-			<td>時段</td>
-			<td><?php  echo $Mon ; ?><br>一</td>
-			<td><?php  echo $Tues ; ?><br>二</td>
-			<td><?php  echo $Wed ; ?><br>三</td>
-			<td><?php  echo $Thru ; ?><br>四</td>
-			<td><?php  echo $Fri ; ?><br>五</td>
-			<td><?php  echo $Sat ; ?><br>六</td>
-			<td><?php  echo $Sun ; ?><br>七</td>
+			<th>時段</th>
+			<th><?php  echo $Mon ; ?><br>一</th>
+			<th><?php  echo $Tues ; ?><br>二</th>
+			<th><?php  echo $Wed ; ?><br>三</th>
+			<th><?php  echo $Thru ; ?><br>四</th>
+			<th><?php  echo $Fri ; ?><br>五</th>
+			<th><?php  echo $Sat ; ?><br>六</th>
+			<th><?php  echo $Sun ; ?><br>七</th>
 		</tr>
+		</thead>
+		<tbody>
 		<?php for ($i=1;$i<=11;$i++) { $btime = $i+8;$etime = $i+9;?>
 		<tr>
 			<td><?php echo $btime."-".$etime; ?></td>
@@ -66,8 +81,9 @@ require_once('..\Member\findBackend.php');
 			<td><?php echo $_SESSION["W7_$i"];?></td>                      
 		</tr>
 		<?php } ?>
-		
+		</tbody>
 	</table>
+</div>
 	<!--BOOSTRAP-->
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
