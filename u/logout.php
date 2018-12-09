@@ -9,6 +9,6 @@
 
 	$root = 'http://' . $_SERVER['HTTP_HOST'];
 
-	header("Location: $root");
+	header("Location: ../index.php");
 	exit();
 ?>

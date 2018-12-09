@@ -102,7 +102,14 @@
 		                		</div>
 		                		<div class="col-lg-4 col-sm-3"></div>
 		                	</div>
-
+		                	<div class="row control-group">
+		                		<div class="col-lg-4 col-sm-3"></div>
+		                		<div class="col-lg-4 col-sm-6">
+					                <label class="radio-inline"><input class="radio-inline" type="radio" name="optradio" checked>Member</label>
+									<label class="radio-inline"><input class="radio-inline" type="radio" name="optradio">Instructor</label>
+		                		</div>
+		                		<div class="col-lg-4 col-sm-3"></div>
+		                	</div>
 		                	<div class="row control-group">
 		                		<div class="col-lg-4 col-sm-3"></div>
 		                		<div class="col-lg-4 col-sm-6">
