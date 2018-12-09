@@ -12,15 +12,43 @@
 	
 	
 	/* Add an Period and acoording instructor to table Period */
-	function AddPeriod($connection, $Instructor, $Begin_Time) {
-		$Checked_Begin_Time = mysqli_real_escape_string($connection, $Begin_Time);
+	function AddPeriod($connection, $query2_INSERT) {
+		$Checked_query2_INSERT = mysqli_real_escape_string($connection, $query2_INSERT);
+		#$result_AddPeriod = mysqli_query($connection, 'call ArrgPerd(?, )'); 
+		#mysqli_stmt_bind_param($result_AddPeriod, $Checked_query2_INSERT);
+		#mysqli_stmt_execute($result_AddPeriod);
+		print($query2_INSERT);
+		print('-----<Br>');
+		$sql = 'CALL ArrgPerd(?)';
+		$stmt = $connection->prepare($sql);
+		$stmt->bind_param('s', $query2_INSERT);
+		$result = $stmt->execute();
+		#$tabResultat = $stmt->fetch();
+		#$Out_val = $tabResultat['Out_val'];
+		#var_dump($Out_val);
 		
-		$query1_INSERT = "INSERT INTO `period`(`I_ID`, `Begin_Time`) VALUES ($Instructor, '$Checked_Begin_Time');";
-		if(!mysqli_query($connection, $query1_INSERT)){
-			echo("Error Arranged Period Data Below:<br>");
+		/*$query_data = mysqli_fetch($result);
+		if ($query_data ) {
+			print('in');
+			while($row = $stmt->fetch()) {
+				echo $query_data[0].$query_data[1];
+				echo '\n';			  
+			}	
+			$stmt->free_result();
+			$stmt->close();
+		}*/
+		
+		/*if(!$tabResultat){
+			echo("Error Arranged Period Data<br>");
 		}else{
-			print('Successfully Arranged Your Periods Below:<br>');	
-		}
+			print('Successfully Arranged Your Periods Below:<br>');		
+			print('instructor ID'.'----'.'Begin Time');
+
+			while($row = $tabResultat->fetch_row()) {
+			  echo $tabResultat[0].$tabResultat[1];
+			  echo '\n';			  
+			}		
+		}*/
 	}
 ?>
 
@@ -41,7 +69,7 @@
 <div class="container">
 	<!--add  Period-->
 	<?php
-		if (isset($_POST["Period_Date"])){
+		if (isset($_POST["time"])){
 			
 			$Period_Date = $_POST["Period_Date"];
 			$time = $_POST ["time"];	
@@ -49,11 +77,11 @@
 			
 			#法1:用for迴圈
 			
-			for($j=0 ; $j< count($time) ; $j++){
+			/*for($j=0 ; $j< count($time) ; $j++){
 				$Begin_Time = $Period_Date.' '.$time[$j];
 				AddPeriod($mysqli, $Instructor, $Begin_Time);
 				print($Begin_Time.'<br>');
-			}
+			}*/
 			
 			#法2:字串合併，呼叫一次MySQL
 			for($j=0 ; $j< count($time) ; $j++){
@@ -65,7 +93,6 @@
 					#$Instructor_Begin_Time = $Instructor_Begin_Time.',('.$Instructor.",".$Period_Date.' '.$time[$j].")";
 				}
 				
-				
 				if ($j == 0){ 
 					$chainBegin_Time = '('."'".$Period_Date.' '.$time[$j]."')";
 				}else{
@@ -73,13 +100,11 @@
 				}
 				
 			}
-			#print($Instructor_Begin_Time);
-			#$query2_INSERT = "INSERT INTO `TTT`(`I_ID`, `Begin_Time`) VALUES ".$Instructor_Begin_Time;
-			$query2_INSERT = "INSERT INTO `TTT`(`I_ID`, `Begin_Time`) VALUES ".$Instructor_Begin_Time;
-
-			print($query2_INSERT);
-			#print($chainBegin_Time);
 			
+			#$query2_INSERT = 'call ArrgPerd('."'INSERT INTO `TTT`(`I_ID`, `Begin_Time`) VALUES ".$Instructor_Begin_Time."'".')';
+			$query2_INSERT = "INSERT INTO `TTT`(`I_ID`, `Begin_Time`) VALUES ".$Instructor_Begin_Time;
+			AddPeriod($mysqli, $query2_INSERT);
+			#print($chainBegin_Time);
 		}
 		
 		

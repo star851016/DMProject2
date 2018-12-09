@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機: 127.0.0.1
--- 產生時間： 2018 年 12 月 08 日 13:56
+-- 產生時間： 2018 年 12 月 08 日 22:36
 -- 伺服器版本: 10.1.36-MariaDB
 -- PHP 版本： 7.2.11
 
@@ -55,8 +55,63 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `apt` (IN `mID` INT(6), IN `cID` INT
             	SELECT i.I_ID,i.Begin_Time
         FROM inFree i
         left outer join mnotFr m on (m.Begin_Time = i.Begin_Time)
-        where m.status is null;
-            	COMMIT;  	
+        where m.status is null
+        for update;
+            	 	
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ArrgPerd` (IN `query2_INSERT` CHAR(200))  BEGIN
+SET @query = query2_INSERT;
+
+DROP TEMPORARY TABLE IF EXISTS TTT;
+
+CREATE TEMPORARY TABLE TTT (
+`I_ID` INT(6) Not Null,
+`Begin_Time` DATETIME Not Null ,
+PRIMARY KEY (`I_ID`, `Begin_Time`)
+   )ENGINE=MEMORY;
+
+PREPARE stmt1 FROM @query;
+
+EXECUTE stmt1;
+
+Select * From TTT;
+
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `find` (IN `mID` INT(6), IN `cID` INT(6))  NO SQL
+BEGIN
+            	START TRANSACTION;
+            	SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+            	CREATE TEMPORARY TABLE mnotFr as
+        SELECT  a.Begin_Time,a.Course_ID,a.status
+        FROM appoint a,course c
+        WHERE a.Course_ID = c.Course_ID
+        AND c.M_ID = mID
+        AND a.status = 'Appoint';
+       
+        CREATE TEMPORARY TABLE inByCourse as
+        select  I_ID
+        FROM compose c
+        where c.Course_ID = cID;
+       
+        CREATE TEMPORARY TABLE perByIn as
+        SELECT p.I_ID,p.Begin_Time
+        from period p, inByCourse t
+        where p.I_ID = t.I_ID;
+       
+        CREATE TEMPORARY TABLE inFree as
+        SELECT p.I_ID,p.Begin_Time
+        FROM perByIn p
+        left outer join appoint a on (a.I_ID = p.I_ID and a.Begin_Time = p.Begin_Time)
+        where status = 'Cancel' or status is null;
+ 
+            	SELECT i.I_ID,i.Begin_Time
+        FROM inFree i
+        left outer join mnotFr m on (m.Begin_Time = i.Begin_Time)
+        where m.status is null
+        LOCK IN SHARE MODE;
+            	 	
 END$$
 
 DELIMITER ;
@@ -80,6 +135,7 @@ CREATE TABLE `appoint` (
 
 INSERT INTO `appoint` (`Course_ID`, `I_ID`, `Begin_Time`, `Status`) VALUES
 (1, 1, '2018-11-13 09:00:00', 'Absent'),
+(1, 1, '2021-02-08 09:00:00', 'Appoint'),
 (1, 2, '2018-12-18 19:00:00', 'Checkin'),
 (2, 1, '2018-11-18 19:00:00', 'Absent'),
 (2, 1, '2018-12-05 15:00:00', 'Absent'),
@@ -310,6 +366,9 @@ CREATE TABLE `period` (
 --
 
 INSERT INTO `period` (`I_ID`, `Begin_Time`) VALUES
+(1, '2018-10-12 15:00:00'),
+(1, '2018-10-12 16:00:00'),
+(1, '2018-10-12 17:00:00'),
 (1, '2018-11-12 15:00:00'),
 (1, '2018-11-13 09:00:00'),
 (1, '2018-11-18 18:00:00'),
@@ -325,12 +384,39 @@ INSERT INTO `period` (`I_ID`, `Begin_Time`) VALUES
 (1, '2018-12-05 17:00:00'),
 (1, '2018-12-05 18:00:00'),
 (1, '2018-12-05 19:00:00'),
+(1, '2018-12-07 09:00:00'),
+(1, '2018-12-07 10:00:00'),
+(1, '2018-12-07 11:00:00'),
 (1, '2018-12-07 12:00:00'),
 (1, '2018-12-07 13:00:00'),
+(1, '2018-12-08 09:00:00'),
+(1, '2018-12-08 10:00:00'),
+(1, '2018-12-08 11:00:00'),
+(1, '2018-12-18 09:00:00'),
+(1, '2018-12-18 10:00:00'),
+(1, '2018-12-18 11:00:00'),
 (1, '2018-12-18 19:00:00'),
 (1, '2018-12-18 20:00:00'),
 (1, '2018-12-19 00:00:00'),
 (1, '2018-12-20 12:00:00'),
+(1, '2020-11-08 09:00:00'),
+(1, '2020-11-08 10:00:00'),
+(1, '2020-11-08 11:00:00'),
+(1, '2020-12-08 09:00:00'),
+(1, '2020-12-08 10:00:00'),
+(1, '2020-12-08 11:00:00'),
+(1, '2021-02-08 09:00:00'),
+(1, '2021-02-08 10:00:00'),
+(1, '2021-02-08 11:00:00'),
+(1, '2021-03-08 09:00:00'),
+(1, '2021-03-08 10:00:00'),
+(1, '2021-03-08 11:00:00'),
+(1, '2021-08-08 09:00:00'),
+(1, '2021-08-08 10:00:00'),
+(1, '2021-08-08 11:00:00'),
+(1, '2021-11-08 09:00:00'),
+(1, '2021-11-08 10:00:00'),
+(1, '2021-11-08 11:00:00'),
 (2, '2018-11-12 15:00:00'),
 (2, '2018-11-14 13:00:00'),
 (2, '2018-11-16 12:00:00'),
