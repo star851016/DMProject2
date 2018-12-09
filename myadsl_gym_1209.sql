@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機: 127.0.0.1
--- 產生時間： 2018 年 12 月 08 日 22:36
+-- 產生時間： 2018 年 12 月 09 日 08:14
 -- 伺服器版本: 10.1.36-MariaDB
 -- PHP 版本： 7.2.11
 
@@ -61,8 +61,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `apt` (IN `mID` INT(6), IN `cID` INT
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ArrgPerd` (IN `query2_INSERT` CHAR(200))  BEGIN
-SET @query = query2_INSERT;
-
 DROP TEMPORARY TABLE IF EXISTS TTT;
 
 CREATE TEMPORARY TABLE TTT (
@@ -71,11 +69,23 @@ CREATE TEMPORARY TABLE TTT (
 PRIMARY KEY (`I_ID`, `Begin_Time`)
    )ENGINE=MEMORY;
 
-PREPARE stmt1 FROM @query;
 
+SET @query = query2_INSERT;
+PREPARE stmt1 FROM @query;
 EXECUTE stmt1;
 
-Select * From TTT;
+CREATE TEMPORARY TABLE VacantTTT
+SELECT TTT.I_ID, TTT.Begin_Time 
+FROM TTT LEFT OUTER JOIN period ON 
+(TTT.I_ID = period.I_ID) AND (TTT.Begin_Time = period.Begin_Time)
+WHERE period.I_ID IS NULL AND period.Begin_Time IS NULL;
+
+INSERT INTO period (I_ID, Begin_Time) 
+SELECT VacantTTT.I_ID, VacantTTT.Begin_Time 
+FROM VacantTTT;
+
+SELECT VacantTTT.I_ID, VacantTTT.Begin_Time 
+FROM VacantTTT;
 
 END$$
 
@@ -366,6 +376,9 @@ CREATE TABLE `period` (
 --
 
 INSERT INTO `period` (`I_ID`, `Begin_Time`) VALUES
+(1, '2010-01-09 09:00:00'),
+(1, '2010-01-09 10:00:00'),
+(1, '2010-01-09 11:00:00'),
 (1, '2018-10-12 15:00:00'),
 (1, '2018-10-12 16:00:00'),
 (1, '2018-10-12 17:00:00'),
