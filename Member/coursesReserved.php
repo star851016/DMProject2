@@ -33,6 +33,22 @@
 	  </thead>
   	  <tbody>
 		<?php
+		function rollin($i){
+			//報到：更新Status: Checkin
+			$checkinBtn=mysqli_query($mysqli2, "
+			UPDATE `appoint` 
+			SET `Status`='Checkin'
+			WHERE `I_ID`= '$IIDArray[$i]' AND `Course_ID`='$courseIDArray[$i]' AND `Begin_Time`='$courseIDArray[$i]'
+			"); 
+		}
+		function cancel($i){
+			//刪除：更新Status: Cancel (上面SQL抓Course_ID, I_ID, Begin_Time的值存入變數，按下按鈕再透過這些變數去改變相對應STATUS的值)
+			$cancelBtn=mysqli_query($mysqli3, "
+			UPDATE `appoint` 
+			SET `Status`='Cancel'
+			WHERE `I_ID`='$IIDArray[$i]'  AND `Course_ID`='$courseIDArray[$i]' AND `Begin_Time`='$beginTimeArray[$i]'
+			");
+		}
 		/* 
 		SQL：
 		1. (V)會員ID=SESSION
@@ -55,28 +71,26 @@
 		  echo "<td>",$query_data[0], "</td>", 
 			   "<td>",$query_data[1], "</td>", 
 			   "<td>",$query_data[2], "</td>"; 
-		  echo "<td> <button type='button' class='btn btn-outline-secondary btn-sm' id='rollinbtn"$i"'>報到</button> </td>";
-		  echo "<td> <button type='button' class='btn btn-outline-secondary btn-sm' id='cancelbtn"$i"'>取消</button> </td>";
+		  echo "<td> <button onclick='",rollin($i),"' type='button' class='btn btn-outline-secondary btn-sm' id='rollinbtn"$i"'>報到</button> </td>";
+		  echo "<td> <button onclick='",cancel($i),"' type='button' class='btn btn-outline-secondary btn-sm' id='cancelbtn"$i"'>取消</button> </td>";
 		  echo "</tr>";
 		  $i++;
-		}
-
-		//報到：更新Status: Checkin
-		$checkinBtn=mysqli_query($mysqli2, "
-		UPDATE `appoint` 
-		SET `Status`='Checkin'
-		WHERE `I_ID`= '$IIDArray[$i]' AND `Course_ID`='$courseIDArray[$i]' AND `Begin_Time`='$courseIDArray[$i]'
-		"); 
-
-		//刪除：更新Status: Cancel (上面SQL抓Course_ID, I_ID, Begin_Time的值存入變數，按下按鈕再透過這些變數去改變相對應STATUS的值)
-		$cancelBtn=mysqli_query($mysqli2, "
-		UPDATE `appoint` 
-		SET `Status`='Cancel'
-		WHERE `I_ID`='$IIDArray[$i]'  AND `Course_ID`='$courseIDArray[$i]' AND `Begin_Time`='$beginTimeArray[$i]'
-		"); 
-
+		} 
 		?>
 	  </tbody>
+
+		<!--
+		<script language="javascript">
+			function rollin(i) {
+				var index=i;
+				//執行SQL
+			}		
+			function cancel(i) {
+				var index=i;
+				//執行SQL
+			}
+		</script>
+		-->
 </table>
 </div>
 	<script src="../js/bootstrap.min.js"></script>
