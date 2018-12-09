@@ -41,23 +41,39 @@
 		*/
 		$sessionID=1;
 		$result = mysqli_query($mysqli, "
-		SELECT `I_ID`, `Course_Type`, `Begin_Time` 
+		SELECT `I_ID`, `Course_Type`, `Begin_Time`, `Course_ID` 
 		FROM `appoint`,  `course`
 		WHERE `M_ID`= $sessionID AND `status`='Appoint' 
 		"); 
 		//列出該會員已約未上的課
+		$i=0;
 		while($query_data = mysqli_fetch_row($result)) {
+			   $IIDArray[$i]=$query_data[0];#I_ID
+			   $courseIDArray[$i]=$query_data[3];#Course_ID
+			   $beginTimeArray[$i]=$query_data[2];#Begin_Time	
 		  echo "<tr>";
-		  echo "<td>",$query_data[0], "</td>",
-			   "<td>",$query_data[1], "</td>",
-			   "<td>",$query_data[2], "</td>";
-		  echo "<td> <button type='button' class='btn btn-outline-secondary btn-sm'>報到</button> </td>";
-		  echo "<td> <button type='button' class='btn btn-outline-secondary btn-sm'>取消</button> </td>";
+		  echo "<td>",$query_data[0], "</td>", 
+			   "<td>",$query_data[1], "</td>", 
+			   "<td>",$query_data[2], "</td>"; 
+		  echo "<td> <button type='button' class='btn btn-outline-secondary btn-sm' id='rollinbtn"$i"'>報到</button> </td>";
+		  echo "<td> <button type='button' class='btn btn-outline-secondary btn-sm' id='cancelbtn"$i"'>取消</button> </td>";
 		  echo "</tr>";
+		  $i++;
 		}
 
 		//報到：更新Status: Checkin
+		$checkinBtn=mysqli_query($mysqli2, "
+		UPDATE `appoint` 
+		SET `Status`='Checkin'
+		WHERE `I_ID`= '$IIDArray[$i]' AND `Course_ID`='$courseIDArray[$i]' AND `Begin_Time`='$courseIDArray[$i]'
+		"); 
+
 		//刪除：更新Status: Cancel (上面SQL抓Course_ID, I_ID, Begin_Time的值存入變數，按下按鈕再透過這些變數去改變相對應STATUS的值)
+		$cancelBtn=mysqli_query($mysqli2, "
+		UPDATE `appoint` 
+		SET `Status`='Cancel'
+		WHERE `I_ID`='$IIDArray[$i]'  AND `Course_ID`='$courseIDArray[$i]' AND `Begin_Time`='$beginTimeArray[$i]'
+		"); 
 
 		?>
 	  </tbody>
