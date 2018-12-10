@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機: 127.0.0.1
--- 產生時間： 2018 年 12 月 09 日 08:14
+-- 產生時間： 2018 年 12 月 10 日 02:59
 -- 伺服器版本: 10.1.36-MariaDB
 -- PHP 版本： 7.2.11
 
@@ -124,6 +124,14 @@ BEGIN
             	 	
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `test1209` (IN `Time` CHAR(200))  BEGIN
+SET @query = Time;
+
+SELECT * FROM appoint
+WHERE Begin_Time = @query;
+
+END$$
+
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -151,6 +159,9 @@ INSERT INTO `appoint` (`Course_ID`, `I_ID`, `Begin_Time`, `Status`) VALUES
 (2, 1, '2018-12-05 15:00:00', 'Absent'),
 (2, 1, '2018-12-05 16:00:00', 'Absent'),
 (2, 1, '2018-12-05 17:00:00', 'Absent'),
+(5, 1, '2018-12-05 09:00:00', 'Absent'),
+(5, 1, '2018-12-07 09:00:00', 'Checkin'),
+(5, 1, '2018-12-07 13:00:00', 'Appoint'),
 (9, 2, '2018-11-14 13:00:00', 'Absent'),
 (9, 2, '2018-11-16 12:00:00', 'Absent');
 
@@ -159,10 +170,11 @@ INSERT INTO `appoint` (`Course_ID`, `I_ID`, `Begin_Time`, `Status`) VALUES
 --
 DELIMITER $$
 CREATE TRIGGER `Remaining_Number_reduce` AFTER UPDATE ON `appoint` FOR EACH ROW BEGIN
-IF NEW.Status = 'Checkin' THEN
-UPDATE course SET Remaining_Number = Remaining_Number - 1
-where Course.Course_ID=NEW.Course_ID;
-END IF;
+#Change to use stored procedures
+#IF NEW.Status = 'Checkin' THEN
+#UPDATE course SET Remaining_Number = Remaining_Number - 1
+#where Course.Course_ID=NEW.Course_ID;
+#END IF;
 END
 $$
 DELIMITER ;
@@ -193,6 +205,7 @@ INSERT INTO `compose` (`I_ID`, `Course_ID`) VALUES
 (1, 8),
 (1, 9),
 (1, 10),
+(1, 13),
 (2, 1),
 (2, 2),
 (2, 3),
@@ -202,6 +215,12 @@ INSERT INTO `compose` (`I_ID`, `Course_ID`) VALUES
 (2, 8),
 (2, 9),
 (2, 10),
+(2, 11),
+(2, 12),
+(2, 13),
+(2, 14),
+(2, 15),
+(2, 16),
 (3, 1),
 (3, 3),
 (3, 4),
@@ -210,7 +229,8 @@ INSERT INTO `compose` (`I_ID`, `Course_ID`) VALUES
 (3, 7),
 (3, 8),
 (3, 9),
-(3, 10);
+(3, 10),
+(3, 14);
 
 -- --------------------------------------------------------
 
@@ -237,12 +257,18 @@ INSERT INTO `course` (`Course_ID`, `M_ID`, `Price`, `Course_Type`, `Number_of_Pe
 (2, 2, 5000, '重訓', 40, 39, '2018-12-05 11:16:21'),
 (3, 1, 30000, '基本重訓', 24, 24, '2018-12-05 11:16:21'),
 (4, 1, 30000, '基本重訓', 24, 24, '2018-12-05 11:16:21'),
-(5, 1, 30000, '基本重訓', 24, 24, '2018-12-05 11:16:21'),
+(5, 1, 30000, '基本重訓', 24, 23, '2018-12-05 11:16:21'),
 (6, 1, 30000, '基本重訓', 24, 24, '2018-12-05 11:16:21'),
 (7, 1, 30000, '基本重訓2', 24, 24, '2018-12-07 23:18:20'),
 (8, 1, 30000, '基本重訓', 24, 24, '2018-12-08 17:04:31'),
 (9, 1, 30000, '基本重訓', 24, 22, '2018-12-08 17:14:55'),
-(10, 1, 30000, '基本重訓', 24, 24, '2018-12-08 17:24:20');
+(10, 1, 30000, '基本重訓', 24, 24, '2018-12-08 17:24:20'),
+(11, 1, 30000, '基本重訓', 24, 24, '2018-12-10 09:39:17'),
+(12, 1, 30000, '基本重訓', 24, 24, '2018-12-10 09:39:20'),
+(13, 1, 30000, '基本重訓', 24, 24, '2018-12-10 09:39:23'),
+(14, 1, 30000, '基本重訓', 24, 24, '2018-12-10 09:39:27'),
+(15, 1, 30000, '基本重訓', 24, 24, '2018-12-10 09:41:38'),
+(16, 1, 30000, '基本重訓', 24, 24, '2018-12-10 09:41:44');
 
 -- --------------------------------------------------------
 
@@ -433,6 +459,8 @@ INSERT INTO `period` (`I_ID`, `Begin_Time`) VALUES
 (2, '2018-11-12 15:00:00'),
 (2, '2018-11-14 13:00:00'),
 (2, '2018-11-16 12:00:00'),
+(2, '2018-12-10 10:00:00'),
+(2, '2018-12-10 11:00:00'),
 (2, '2018-12-18 19:00:00'),
 (2, '2018-12-18 21:00:00'),
 (2, '2018-12-21 09:00:00'),
@@ -527,7 +555,7 @@ ALTER TABLE `period`
 -- 使用資料表 AUTO_INCREMENT `course`
 --
 ALTER TABLE `course`
-  MODIFY `Course_ID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `Course_ID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- 使用資料表 AUTO_INCREMENT `instructor`
