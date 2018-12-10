@@ -25,7 +25,7 @@ require_once('database.php');
 			<div class="form-group row">				
 				<label class="col-sm-2 col-form-label">Instructor ID</label>
 				<div class="col-sm-4">
-					<input type="Instructor" class="form-control" value=1 name="Instructor">
+					<input type="Instructor" class="form-control" value=$_SESSION['ID'] name="Instructor" readonly>
 				</div>
 			</div>
 			<hr>

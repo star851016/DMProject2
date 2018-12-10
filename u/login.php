@@ -87,7 +87,7 @@
 		                	<div class="row control-group">
 		                		<div class="col-lg-4 col-sm-3"></div>
 		                		<div class="col-lg-4 col-sm-6">
-					                <label>Member ID</label>
+					                <label>Your ID</label>
 					                <input type="text" class="form-control" id="M_ID" name="username"></input>
 
 					                </div>
