@@ -11,6 +11,7 @@ $password = $_POST['password'];
 #$_POST['username'] == $username && $_POST['password'] == $password
 if ($_POST['optradio'] =='Member' ) {
 	echo '<meta http-equiv=REFRESH CONTENT=1;url=../Member/coursesBought.php>';
+	$_SESSION['ID'] = $username;
 }
 else {
 	echo '<meta http-equiv=REFRESH CONTENT=1;url=../Instructor/Instructor_Center.php>';	
