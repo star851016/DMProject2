@@ -13,7 +13,7 @@ require_once('database.php');
 	if (!$res1) {
  		die("sql error:\n" . $mysqli->error);
 	}	
-require_once('..\Member\findBackend.php');
+require_once('findBackend.php');
 
 ?>
 <!DOCTYPE html>
