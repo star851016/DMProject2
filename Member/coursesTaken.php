@@ -32,7 +32,7 @@
 	</thead>
 	<tbody>
 		<?php
-		$ID=$SESSION['ID'];
+		$ID=$_SESSION['ID'];
 		$result = mysqli_query($mysqli, "
 		SELECT `I_ID`, `Course_Type`, `Begin_Time`, `Number_of_Period`-`Remaining_Number` 
 		FROM `course`, `appoint` 

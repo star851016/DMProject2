@@ -44,7 +44,7 @@
 		ONCLICK=function 更新空白表單的VALUE為index，呼叫PHP中的更新SQL
 		用type=submit去傳送form的值
 		*/
-		$ID=$SESSION['ID'];
+		$ID=$_SESSION['ID'];
 		$result = mysqli_query($mysqli, "
 		SELECT `I_ID`, `Course_Type`, `Begin_Time`, `appoint`.`Course_ID` 
 		FROM `appoint`,  `course`
