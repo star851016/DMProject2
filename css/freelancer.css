@@ -90,7 +90,7 @@ header {
     background:#18bc9c url("../images/powerimg.jpg") center center fixed no-repeat;
     -moz-background-size: cover;
     background-size: cover;
-    padding-bottom: 120px;
+    padding-bottom: 1000px;
 }
 
 header .container {
