@@ -32,8 +32,11 @@
 	</thead>
 	<tbody>
 		<?php
+		$ID=$SESSION['ID'];
 		$result = mysqli_query($mysqli, "
-		SELECT `I_ID`, `Course_Type`, `Begin_Time`, `Number_of_Period`-`Remaining_Number` FROM `course`, `appoint` WHERE `course`.`Course_ID`=`appoint`.`Course_ID` and `appoint`.`Status`='Checkin' 
+		SELECT `I_ID`, `Course_Type`, `Begin_Time`, `Number_of_Period`-`Remaining_Number` 
+		FROM `course`, `appoint` 
+		WHERE `course`.`Course_ID`=`appoint`.`Course_ID` AND `appoint`.`Status`='Checkin' AND `course`.`M_ID`= '$ID'
 		"); 
 
 		while($query_data = mysqli_fetch_row($result)) {

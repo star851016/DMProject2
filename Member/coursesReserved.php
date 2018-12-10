@@ -44,11 +44,11 @@
 		ONCLICK=function 更新空白表單的VALUE為index，呼叫PHP中的更新SQL
 		用type=submit去傳送form的值
 		*/
-		$sessionID=1;
+		$ID=$SESSION['ID'];
 		$result = mysqli_query($mysqli, "
 		SELECT `I_ID`, `Course_Type`, `Begin_Time`, `appoint`.`Course_ID` 
 		FROM `appoint`,  `course`
-		WHERE `M_ID`= '$sessionID' AND `status`='Appoint' AND `appoint`.`Course_ID`=`course`.`Course_ID` 
+		WHERE `M_ID`= '$ID' AND `status`='Appoint' AND `appoint`.`Course_ID`=`course`.`Course_ID` 
 		"); 
 		//列出該會員已約未上的課
 		$i=0;

@@ -32,11 +32,11 @@
 	</thead>
 	<tbody>
 		<?php
-		$thisCourseID = 1;
+		$ID=$SESSION['ID'];
 		$result = mysqli_query($mysqli, "
 			SELECT `Course_Type`,`Price`, `Number_of_Period`,`Remaining_Number`
 			FROM `course`
-			WHERE `course`.`Course_ID`=$thisCourseID
+			WHERE `course`.`M_ID`='$ID'
 		"); 
 		while($query_data = mysqli_fetch_row($result)) {
 		  echo "<tr>";
