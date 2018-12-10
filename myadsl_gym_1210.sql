@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機: 127.0.0.1
--- 產生時間： 2018 年 12 月 10 日 02:59
+-- 產生時間： 2018 年 12 月 10 日 08:07
 -- 伺服器版本: 10.1.36-MariaDB
 -- PHP 版本： 7.2.11
 
@@ -26,7 +26,7 @@ DELIMITER $$
 --
 -- Procedure
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `apt` (IN `mID` INT(6), IN `cID` INT(6))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `apt` (IN `mID` INT(6), IN `cID` INT(6), IN `stTime` VARCHAR(50), IN `edTime` VARCHAR(50))  BEGIN
             	START TRANSACTION;
             	SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
             	CREATE TEMPORARY TABLE mnotFr as
@@ -44,7 +44,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `apt` (IN `mID` INT(6), IN `cID` INT
         CREATE TEMPORARY TABLE perByIn as
         SELECT p.I_ID,p.Begin_Time
         from period p, inByCourse t
-        where p.I_ID = t.I_ID;
+        where p.I_ID = t.I_ID
+        and p.Begin_Time between stTime and edTime;
        
         CREATE TEMPORARY TABLE inFree as
         SELECT p.I_ID,p.Begin_Time
@@ -89,7 +90,7 @@ FROM VacantTTT;
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `find` (IN `mID` INT(6), IN `cID` INT(6))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `find` (IN `mID` INT(6), IN `cID` INT(6), IN `stTime` VARCHAR(50), IN `edTime` VARCHAR(50))  NO SQL
 BEGIN
             	START TRANSACTION;
             	SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
@@ -108,8 +109,9 @@ BEGIN
         CREATE TEMPORARY TABLE perByIn as
         SELECT p.I_ID,p.Begin_Time
         from period p, inByCourse t
-        where p.I_ID = t.I_ID;
-       
+        where p.I_ID = t.I_ID
+        and p.Begin_Time between stTime and edTime;
+     
         CREATE TEMPORARY TABLE inFree as
         SELECT p.I_ID,p.Begin_Time
         FROM perByIn p
@@ -153,15 +155,19 @@ CREATE TABLE `appoint` (
 
 INSERT INTO `appoint` (`Course_ID`, `I_ID`, `Begin_Time`, `Status`) VALUES
 (1, 1, '2018-11-13 09:00:00', 'Absent'),
+(1, 1, '2018-12-05 10:00:00', 'Appoint'),
+(1, 1, '2018-12-18 09:00:00', 'Appoint'),
+(1, 1, '2018-12-18 10:00:00', 'Appoint'),
 (1, 1, '2021-02-08 09:00:00', 'Appoint'),
 (1, 2, '2018-12-18 19:00:00', 'Checkin'),
+(1, 2, '2018-12-21 09:00:00', 'Appoint'),
 (2, 1, '2018-11-18 19:00:00', 'Absent'),
 (2, 1, '2018-12-05 15:00:00', 'Absent'),
 (2, 1, '2018-12-05 16:00:00', 'Absent'),
 (2, 1, '2018-12-05 17:00:00', 'Absent'),
 (5, 1, '2018-12-05 09:00:00', 'Absent'),
 (5, 1, '2018-12-07 09:00:00', 'Checkin'),
-(5, 1, '2018-12-07 13:00:00', 'Appoint'),
+(5, 1, '2018-12-07 13:00:00', 'Absent'),
 (9, 2, '2018-11-14 13:00:00', 'Absent'),
 (9, 2, '2018-11-16 12:00:00', 'Absent');
 
@@ -206,6 +212,7 @@ INSERT INTO `compose` (`I_ID`, `Course_ID`) VALUES
 (1, 9),
 (1, 10),
 (1, 13),
+(1, 17),
 (2, 1),
 (2, 2),
 (2, 3),
@@ -221,6 +228,7 @@ INSERT INTO `compose` (`I_ID`, `Course_ID`) VALUES
 (2, 14),
 (2, 15),
 (2, 16),
+(2, 17),
 (3, 1),
 (3, 3),
 (3, 4),
@@ -268,7 +276,8 @@ INSERT INTO `course` (`Course_ID`, `M_ID`, `Price`, `Course_Type`, `Number_of_Pe
 (13, 1, 30000, '基本重訓', 24, 24, '2018-12-10 09:39:23'),
 (14, 1, 30000, '基本重訓', 24, 24, '2018-12-10 09:39:27'),
 (15, 1, 30000, '基本重訓', 24, 24, '2018-12-10 09:41:38'),
-(16, 1, 30000, '基本重訓', 24, 24, '2018-12-10 09:41:44');
+(16, 1, 30000, '基本重訓', 24, 24, '2018-12-10 09:41:44'),
+(17, 1, 30000, '基本重訓', 24, 24, '2018-12-10 10:07:25');
 
 -- --------------------------------------------------------
 
@@ -431,13 +440,25 @@ INSERT INTO `period` (`I_ID`, `Begin_Time`) VALUES
 (1, '2018-12-08 09:00:00'),
 (1, '2018-12-08 10:00:00'),
 (1, '2018-12-08 11:00:00'),
+(1, '2018-12-10 09:00:00'),
+(1, '2018-12-10 10:00:00'),
+(1, '2018-12-10 11:00:00'),
+(1, '2018-12-10 12:00:00'),
+(1, '2018-12-10 13:00:00'),
+(1, '2018-12-10 14:00:00'),
+(1, '2018-12-10 15:00:00'),
+(1, '2018-12-10 16:00:00'),
+(1, '2018-12-10 17:00:00'),
+(1, '2018-12-10 18:00:00'),
+(1, '2018-12-12 12:00:00'),
+(1, '2018-12-13 00:00:00'),
 (1, '2018-12-18 09:00:00'),
 (1, '2018-12-18 10:00:00'),
-(1, '2018-12-18 11:00:00'),
 (1, '2018-12-18 19:00:00'),
-(1, '2018-12-18 20:00:00'),
 (1, '2018-12-19 00:00:00'),
+(1, '2018-12-19 14:00:00'),
 (1, '2018-12-20 12:00:00'),
+(1, '2018-12-21 12:00:00'),
 (1, '2020-11-08 09:00:00'),
 (1, '2020-11-08 10:00:00'),
 (1, '2020-11-08 11:00:00'),
@@ -555,7 +576,7 @@ ALTER TABLE `period`
 -- 使用資料表 AUTO_INCREMENT `course`
 --
 ALTER TABLE `course`
-  MODIFY `Course_ID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `Course_ID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- 使用資料表 AUTO_INCREMENT `instructor`

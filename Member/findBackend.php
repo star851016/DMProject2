@@ -52,6 +52,8 @@
 	}
 
 	$M_ID = 1;
+	$stTime = $Start." 00:00:00";
+	$edTime = $End ." 23:59:59"; 
 	if ($Start > $getdate){
 		$BookStart = $Start;
 	} else {
@@ -61,7 +63,7 @@
 	if (isset($_SESSION["Course_ID"])) {
 		$Course_ID = $_SESSION["Course_ID"];
 		$res = $mysqli->query("
-								call find($M_ID,$Course_ID);
+								call find($M_ID,$Course_ID,'$stTime','$edTime');
 							");	
 		while($row = $res->fetch_assoc()){
 			$Begin_Time=$row['Begin_Time'];	
@@ -79,6 +81,6 @@
 			.$row['I_ID'];			
 		}
 	}
-
+	
 
 ?>

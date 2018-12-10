@@ -2,8 +2,8 @@
 	require_once('database.php');
 	
 	#[待改]要抓Period的教練
-	if(isset($_POST ["Instructor"])){
-		$Instructor =  $_POST ["Instructor"];
+	if(isset($_SESSION['ID'])){
+		$Instructor =  $_SESSION['ID'];
 	}else{
 		$Instructor =  1;
 	}

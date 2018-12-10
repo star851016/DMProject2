@@ -6,13 +6,14 @@
 	$mysqli= new mysqli($mysqlhost,$mysqluser,$mysqlpassword,$mysqldb);
 	//錯誤處理
 	if ($mysqli->connect_error != "") {
-		echo "本機資料庫連結失敗，嘗試連線線上資料庫！";
 
 		$mysqlhost = "project2-2.cr44rp6foiyg.ap-southeast-1.rds.amazonaws.com";
-		$mysqluser = "MyADSL";
+		$mysqluser = "MADSL";
 		$mysqlpassword = "d.m._MADSL";
-		$mysqldb = "MADSL_GYM";
+		$mysqldb = "MyADSL_GYM";
+		$mysqli= new mysqli($mysqlhost,$mysqluser,$mysqlpassword,$mysqldb);
 		if ($mysqli->connect_error != "") {
+			echo "本機資料庫連結失敗，嘗試連線線上資料庫！\n";
 			echo "線上資料庫連結失敗！";
 		}else{
 			//設定字元集與編碼

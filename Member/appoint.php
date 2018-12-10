@@ -52,17 +52,20 @@
 	}
 
 	$M_ID = 1;
+	$stTime = $Start ."00:00:00";
+	$edTime = $End ." 23:59:59"; 
 	if ($Start > $getdate){
-		$BookStart = $Start;
+		$BookStart = $stTime;
 	} else {
 		$BookStart = $getdate;
 	}
+	
 	// 如果課程ID有存入session，就去資料庫查詢所有教練有空的時間
 	if (isset($_SESSION["Course_ID"])) {
 		$Course_ID = $_SESSION["Course_ID"];
 		$mysqli->autocommit(FALSE);
 		$res = $mysqli->query("
-								call apt($M_ID,$Course_ID);
+								call apt($M_ID,$Course_ID,'$stTime','$edTime');
 							");	
 		while($row = $res->fetch_assoc()){
 			$Begin_Time=$row['Begin_Time'];	
