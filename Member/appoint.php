@@ -50,7 +50,7 @@
 			$_SESSION["W".$i."_".$j] = "";
 		}
 	}
-
+	//$M_ID = $_SESSION['ID'];
 	$M_ID = 1;
 	$stTime = $Start ." 00:00:00";
 	$edTime = $End ." 23:59:59"; 

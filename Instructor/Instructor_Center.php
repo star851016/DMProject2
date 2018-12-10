@@ -177,7 +177,7 @@
 							#如果["Status"]不等於'appoint'，代表該時段沒被預約<才可以刪除
 							if(!$row["Status"]=='appoint'){ 
 								echo "<a href='Delete.php?id=";
-								echo $row["I_ID"].",'".$row["Begin_Time"]."'";
+								echo $row["I_ID"].",\"".$row["Begin_Time"]."\"";
 								echo "'>";
 								echo "刪除</a>"; 
 							}

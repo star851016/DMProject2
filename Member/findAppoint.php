@@ -1,9 +1,12 @@
 <?php
 require_once('database.php');
+
+	//$M_ID = $_SESSION['ID'];
+	$M_ID = 1;
 	//查詢該會員所有課程
 	$res1 = $mysqli->query("select Course_Type,Course_ID
 							from course as c , member as m
-							where 	m.M_ID = c.M_ID and m.M_ID = '1'
+							where 	m.M_ID = c.M_ID and m.M_ID = $M_ID
 							and c.Remaining_Number > 0
 						");
 	if (!$res1) {
