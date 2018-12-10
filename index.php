@@ -88,7 +88,7 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2>What is POWER LIFE?</h2>
-                    <hr class="star-primary">
+                    <hr>
                 </div>
             </div>
             <div class="container row center">
@@ -124,7 +124,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <a href="u/register.php" class="btn btn-lg btn-outline btn-reg">
+                    <a href="u/register.php" class="btn btn-lg btn-outline btn-outline-secondary">
                         <i class="fa fa-hand-o-right"></i>&nbsp;&nbsp;Register Right Now&nbsp;
                     </a>
                 </div>
@@ -136,7 +136,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>ABOUT US</h2>
+                    <h3>ABOUT US</h3>
                     <hr class="star-light">
                 </div>
             </div>
