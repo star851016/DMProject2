@@ -17,8 +17,8 @@
 		#$result_AddPeriod = mysqli_query($connection, 'call ArrgPerd(?, )'); 
 		#mysqli_stmt_bind_param($result_AddPeriod, $Checked_query2_INSERT);
 		#mysqli_stmt_execute($result_AddPeriod);
-		print($query2_INSERT);
-		print('-----<Br>');
+		#print($query2_INSERT);
+		#print('-----<Br>');
 		$sql = 'CALL ArrgPerd(?)';
 		$stmt = $connection->prepare($sql);
 		$stmt->bind_param('s', $query2_INSERT);

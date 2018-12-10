@@ -139,13 +139,13 @@ if (isset($_POST["Instructors1"])){
 			<div class="form-group row">				
 				<label class="col-sm-2 col-form-label">Instructors</label>
 				<div class="col-sm-3">
-					<input class="form-control" type="text" name="Instructors1"value=1 />
+					<input class="form-control" type="text" name="Instructors1"value=' <?php echo $_SESSION['ID'];?>' />
 				</div>
 				<div class="col-sm-3">
-					<input class="form-control" type="text" name="Instructors2"value=2 />
+					<input class="form-control" type="text" name="Instructors2" />
 				</div>
 				<div class="col-sm-3">
-					<input class="form-control" type="text" name="Instructors3" value=3 />
+					<input class="form-control" type="text" name="Instructors3"  />
 				</div>
 			</div>
 			<div class="form-group row">				
@@ -169,7 +169,7 @@ if (isset($_POST["Instructors1"])){
 			<div class="form-group row">				
 				<label class="col-sm-2 col-form-label">Student's Password</label>
 				<div class="col-sm-3">
-					<input class="form-control" type="text" name="StudentPassword" value=1234 />
+					<input class="form-control" type="password" name="StudentPassword"  />
 				</div>
 			</div>
 			<div class="form-group row">				
