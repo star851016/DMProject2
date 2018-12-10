@@ -47,8 +47,8 @@ else{
 		"); 
 
 	while($DB_pwd=mysqli_fetch_row($result)){
-		if(!empty($DB_pwd)){	//確保資料庫中有這筆帳號ID
-			if($DB_pwd!=$password){	//比對密碼
+		if(!empty($DB_pwd[0])){	//確保資料庫中有這筆帳號ID
+			if($DB_pwd[0]!=$password){	//比對密碼
 					echo "<script>alert('WRONG PASSWORD!');</script>";
 					header("Location: login.php");
 					exit; 
