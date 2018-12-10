@@ -52,7 +52,7 @@
 	}
 
 	$M_ID = 1;
-	$stTime = $Start ."00:00:00";
+	$stTime = $Start ." 00:00:00";
 	$edTime = $End ." 23:59:59"; 
 	if ($Start > $getdate){
 		$BookStart = $stTime;
@@ -65,7 +65,7 @@
 		$Course_ID = $_SESSION["Course_ID"];
 		$mysqli->autocommit(FALSE);
 		$res = $mysqli->query("
-								call apt($M_ID,$Course_ID,'$stTime','$edTime');
+								call apt($M_ID,$Course_ID,'$BookStart','$edTime');
 							");	
 		while($row = $res->fetch_assoc()){
 			$Begin_Time=$row['Begin_Time'];	
@@ -83,5 +83,5 @@
 			.$row['I_ID']."</button>";			
 		}
 	}
-
+	
 ?>
