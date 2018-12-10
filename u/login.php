@@ -1,4 +1,6 @@
 <?php require_once "../ui/base.php"; ?>
+<?php if (!isset($_SESSION)){ session_start(); } ?>
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>

@@ -34,7 +34,7 @@
 		$mysqli->query("set names 'utf8';");
 		date_default_timezone_set("Asia/Taipei");
 	}
-	session_start();
+	if (!isset($_SESSION)){ session_start(); } 
 ?>
 
 

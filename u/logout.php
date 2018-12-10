@@ -1,8 +1,9 @@
+<?php if (!isset($_SESSION)){ session_start(); } ?>
 <?php
 
-	Session_start();
+	
 
-	if(isset($_SESSION['M_ID']))
+	if(isset($_SESSION['ID']))
 	{
 		Session_destroy();
 	}

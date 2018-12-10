@@ -1,3 +1,4 @@
+<?php if (!isset($_SESSION)){ session_start(); } ?>
 <?php
 //登入時輸入的內容
 $username = $_POST['username'];
