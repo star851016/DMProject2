@@ -17,8 +17,8 @@
 		#$result_AddPeriod = mysqli_query($connection, 'call ArrgPerd(?, )'); 
 		#mysqli_stmt_bind_param($result_AddPeriod, $Checked_query2_INSERT);
 		#mysqli_stmt_execute($result_AddPeriod);
-		#print($query2_INSERT);
-		#print('-----<Br>');
+		print($query2_INSERT);
+		print('-----<Br>');
 		$sql = 'CALL ArrgPerd(?)';
 		$stmt = $connection->prepare($sql);
 		$stmt->bind_param('s', $query2_INSERT);
@@ -173,10 +173,18 @@
 					<td><?php echo $row["I_ID"]; ?></td>
 					<td><?php echo $row["Begin_Time"]; ?></td>
 					<td>
-						<a href="Delete.php?id=<?php echo $row["I_ID"].",'".$row["Begin_Time"]."'"; ?>"><?php 
+						<?php 
 							#如果["Status"]不等於'appoint'，代表該時段沒被預約<才可以刪除
-							if(!$row["Status"]=='appoint'){ echo 'Delete'; }else{echo '' ;};
-						?></a>
+							if(!$row["Status"]=='appoint'){ 
+								echo "<a href='Delete.php?id=";
+								echo $row["I_ID"].",'".$row["Begin_Time"]."'";
+								echo "'>";
+								echo "刪除</a>"; 
+							}
+							else{
+								echo '已被預約' ;
+							};
+						?>
 					</td>
 				</tr>
 				<?php $count++; } 
