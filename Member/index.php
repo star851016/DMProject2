@@ -14,7 +14,7 @@ require_once('database.php');
 	if (!$res1) {
  		die("sql error:\n" . $mysqli->error);
 	}	
-require_once('..\Member\appoint.php');
+require_once('appoint.php');
 
 ?>
 <!DOCTYPE html>
