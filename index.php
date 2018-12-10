@@ -87,30 +87,38 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>Let's do it</h2>
+                    <h2>What is POWER LIFE?</h2>
                     <hr class="star-primary">
                 </div>
+            </div>
+            <div class="container row center">
+                
+                <p class="text-center">A platform for gym-goers, which can help user to find their best match. </p>
+                <br>
             </div>
             <div class="row">
                 <div class="col-sm-4 intro portfolio-item">
                     <section class="special box">
                         <i class="icon fa-book major"></i>
                         <h3>COURSE</h3>
-                        <p>In here, we provide ...</p>
+                        <p>Exercise must be part of the life you have to do. One of the best choose is our platfrom. There are a variety of courses with professional fitness instructos for you. Do not hesitate, register and find your favorite! </p>
                     </section>
                 </div>
                 <div class="col-sm-4 intro">
                     <section class="special box">
                         <i class="icon fa-comments major"></i>
                         <h3>INSTRUCTOR</h3>
-                        <p>In here, we provide ...</p>
+                        <p>We also welcome experienced and professional fitness enthusiasts to be our “instructors”. Their duty is to make give members appropriate advices during the course. 
+
+</p>
                     </section>
                 </div>
                 <div class="col-sm-4 intro">
                     <section class="special box">
                         <i class="icon fa-lock major"></i>
                         <h3>MEMBER</h3>
-                        <p>In here, we provide ...</p>
+                        <p>Those who need directions and want to  set up a fitness goal are our potential customers. You can sign in as “member” to view and try more functions. 
+</p>
                     </section>
                 </div>
             </div>
