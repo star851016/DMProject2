@@ -15,41 +15,20 @@
 	/* Add an Period and acoording instructor to table Period */
 	function AddPeriod($connection, $query2_INSERT) {
 		$Checked_query2_INSERT = mysqli_real_escape_string($connection, $query2_INSERT);
-		#$result_AddPeriod = mysqli_query($connection, 'call ArrgPerd(?, )'); 
-		#mysqli_stmt_bind_param($result_AddPeriod, $Checked_query2_INSERT);
-		#mysqli_stmt_execute($result_AddPeriod);
-		print($query2_INSERT);
-		print('-----<Br>');
+		#print($query2_INSERT);
 		$sql = 'CALL ArrgPerd(?)';
 		$stmt = $connection->prepare($sql);
 		$stmt->bind_param('s', $query2_INSERT);
-		$result = $stmt->execute();
-		#$tabResultat = $stmt->fetch();
-		#$Out_val = $tabResultat['Out_val'];
-		#var_dump($Out_val);
+		$stmt->execute();
+		$stmt->bind_result($I_ID, $Begin_Time);
 		
-		/*$query_data = mysqli_fetch($result);
-		if ($query_data ) {
-			print('in');
-			while($row = $stmt->fetch()) {
-				echo $query_data[0].$query_data[1];
-				echo '\n';			  
-			}	
-			$stmt->free_result();
-			$stmt->close();
-		}*/
+		print('Successfully Arranged Your Periods Below:<br>');		
+		print('ID'.'----'.'Begin Time<br>');
+		while($stmt->fetch()) {
+			echo $I_ID.'----'.$Begin_Time;
+			echo '<br>';			  
+		}	
 		
-		/*if(!$tabResultat){
-			echo("Error Arranged Period Data<br>");
-		}else{
-			print('Successfully Arranged Your Periods Below:<br>');		
-			print('instructor ID'.'----'.'Begin Time');
-
-			while($row = $tabResultat->fetch_row()) {
-			  echo $tabResultat[0].$tabResultat[1];
-			  echo '\n';			  
-			}		
-		}*/
 	}
 ?>
 
