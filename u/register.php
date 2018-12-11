@@ -65,15 +65,23 @@
                     <hr class="star-primary">
                 </div>
             </div>
-            <form id="registerForm">
+            <form action="newAccount.php" name="registerForm" >
 	            <div class="row">
 	                <div class="col-lg-12">
-					<!--註冊欄位-->
+					<!--註冊欄位
+			<div class="form-group row">				
+				<label class="col-sm-2 col-form-label">Price</label>
+				<div class="col-sm-3">
+					<input class="form-control" type="text" name="Price" value=30000 />
+				</div>
+			</div>
+					-->
+
 	                	<div class="row control-group">
 	                		<div class="col-lg-4 col-sm-3"></div>
 	                		<div class="col-lg-4 col-sm-6">
 				                <label for="Identity">Identity</label>
-				                <select class="form-control" id="selectIdentity" name="selectIdentity">
+				                <select class="form-control" id="SelectIdentity" name="selectIdentity">
 						          	<option value="-1" disabled selected hidden>Please choose an identity.</option>
 						           	<option value="1">Member</option>
 						           	<option value="2">Instructor</option>
@@ -81,30 +89,11 @@
 	                		</div>
 	                		<div class="col-lg-4 col-sm-3"></div>
 	                	</div>
-
-						<div class="row control-group">
-	                		<div class="col-lg-4 col-sm-3"></div>
-	                		<div class="col-lg-4 col-sm-6">
-				                <label for="Name">Name</label>
-				                <input type="text" class="form-control" placeholder="please enter your name" id="Name" required maxlength="15"></input>
-	                		</div>
-	                		<div class="col-lg-4 col-sm-3"></div>
-	                	</div>
-						
-						<div class="row control-group">
-	                		<div class="col-lg-4 col-sm-3"></div>
-	                		<div class="col-lg-4 col-sm-6">
-				                <label for="mail">E-mail</label>
-				                <input type="text" class="form-control" placeholder="please enter your e-mail address" id="email" required maxlength="15"></input>
-	                		</div>
-	                		<div class="col-lg-4 col-sm-3"></div>
-	                	</div>
-						
 	                	<div class="row control-group">
 	                		<div class="col-lg-4 col-sm-3"></div>
 	                		<div class="col-lg-4 col-sm-6">
 				                <label for="Password">Password</label>
-				                <input type="password" class="form-control" placeholder="please enter your password" id="Password" required data-validation-regex-regex="^(?=.*\d)(?=.*[a-zA-Z]).{8,30}$"></input>
+				                <input type="password" class="form-control" placeholder="please enter your password" id="Password" name="password" required data-validation-regex-regex="^(?=.*\d)(?=.*[a-zA-Z]).{8,30}$"></input>
 	                		</div>
 	                		<div class="col-lg-4 col-sm-3"></div>
 	                	</div>
@@ -113,16 +102,25 @@
 	                		<div class="col-lg-4 col-sm-3"></div>
 	                		<div class="col-lg-4 col-sm-6">
 				                <label for="PasswordConfirm">Confirm the Password</label>
-				                <input type="password" class="form-control" placeholder="please enter your password again" id="PasswordConfirm" required data-validation-matches-match="Password"></input>
+				                <input type="password" class="form-control" placeholder="please enter your password again" id="PasswordConfirm" name="passwordConfirm" required data-validation-matches-match="Password"></input>
 	                		</div>
 	                		<div class="col-lg-4 col-sm-3"></div>
 	                	</div>
 						
-	                	<div class="row control-group">
+						<div class="row control-group">
 	                		<div class="col-lg-4 col-sm-3"></div>
 	                		<div class="col-lg-4 col-sm-6">
-				                <label for="phone">Phone</label>
-				                <input type="text" class="form-control" placeholder="please enter your phone number" id="phone" required maxlength="15"></input>
+				                <label for="Name">Name</label>
+				                <input type="text" class="form-control" placeholder="please enter your name" id="UserName" name="userName" required maxlength="15"></input>
+	                		</div>
+	                		<div class="col-lg-4 col-sm-3"></div>
+	                	</div>
+						
+						<div class="row control-group">
+	                		<div class="col-lg-4 col-sm-3"></div>
+	                		<div class="col-lg-4 col-sm-6">
+				                <label for="mail">E-mail</label>
+				                <input type="text" class="form-control" placeholder="please enter your e-mail address" id="Email" name="email" required maxlength="30"></input>
 	                		</div>
 	                		<div class="col-lg-4 col-sm-3"></div>
 	                	</div>
@@ -130,8 +128,16 @@
 	                	<div class="row control-group">
 	                		<div class="col-lg-4 col-sm-3"></div>
 	                		<div class="col-lg-4 col-sm-6">
+				                <label for="phone">Phone</label>
+				                <input type="text" class="form-control" placeholder="please enter your phone number" id="Phone" name="phone" required maxlength="15"></input>
+	                		</div>
+	                		<div class="col-lg-4 col-sm-3"></div>
+	                	</div>
+	                	<div class="row control-group">
+	                		<div class="col-lg-4 col-sm-3"></div>
+	                		<div class="col-lg-4 col-sm-6">
 				                <label for="Gender">Gender</label>
-				                <select class="form-control" id="Gender" name="Gender">
+				                <select class="form-control" id="Gender" name="gender">
 									<option value="M">Male</option>
 									<option value="F">Female</option>
 									<option value="O">other</option>
@@ -139,59 +145,23 @@
 	                		</div>
 	                		<div class="col-lg-4 col-sm-3"></div>
 	                	</div>
-
-	                	
 	                	<div class="row control-group">
 	                		<div class="col-lg-4 col-sm-3"></div>
 	                		<div class="col-lg-4 col-sm-6">
-				                <label>Birthday</label>
-				                <br>
-				                <div class="row">
-					                <div class="col-xs-4">
-						                <select class="form-control" id="Year" name="Year">
-						                <?php $start = getdate()["year"]; ?>
-						                	<option value="-1" disabled selected hidden>year</option>
-						                	<?php
-						                		for($i = $start-10; $i >=($start-65); $i--)
-						                		{
-						                	?>
-						                	<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-						                	<?php }; ?>
-						                </select>
-					                </div>
-					                <div class="col-xs-4">
-						                <select class="form-control" id="Month" name="Month">
-						                	<option value="-1" disabled selected hidden>month</option>
-						                	<option value="1">1</option>
-						                	<option value="2">2</option>
-						                	<option value="3">3</option>
-						                	<option value="4">4</option>
-						                	<option value="5">5</option>
-						                	<option value="6">6</option>
-						                	<option value="7">7</option>
-						                	<option value="8">8</option>
-						                	<option value="9">9</option>
-						                	<option value="10">10</option>
-						                	<option value="11">11</option>
-						                	<option value="12">12</option>
-						                </select>
-					                </div>
-					                <div class="col-xs-4">
-						                <select class="form-control" id="Day" name="Day">
-						                	<option value="-1" disabled selected hidden>date</option>
-						                	<?php 
-						                		for($i=1; $i <=31; $i++){
-						                	?>
-						                	<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-						                	<?php } ?>
-
-						                </select>
-					                </div>
-				                </div>
+				                <label for="age">Age</label>
+				                <input type="text" class="form-control" placeholder="please enter your age" id="Age" name="age" required maxlength="3"></input>
 	                		</div>
 	                		<div class="col-lg-4 col-sm-3"></div>
 	                	</div>
-
+	     
+	                	<div class="row control-group">
+	                		<div class="col-lg-4 col-sm-3"></div>
+	                		<div class="col-lg-4 col-sm-6">
+				                <label for="address">Location</label>
+				                <input type="text" class="form-control" placeholder="please enter your location" id="Address" name="address" required maxlength="30"></input>
+	                		</div>
+	                		<div class="col-lg-4 col-sm-3"></div>
+	                	</div>
 	                	<br>
 	                	
 	                	<hr class="star-primary">
