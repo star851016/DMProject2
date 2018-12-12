@@ -15,7 +15,7 @@
 	/* Add an Period and acoording instructor to table Period */
 	function AddPeriod($connection, $query2_INSERT) {
 		$Checked_query2_INSERT = mysqli_real_escape_string($connection, $query2_INSERT);
-		#print($query2_INSERT);
+		print($query2_INSERT);
 		$sql = 'CALL ArrgPerd(?)';
 		$stmt = $connection->prepare($sql);
 		$stmt->bind_param('s', $query2_INSERT);
