@@ -27,7 +27,7 @@
 		<td>Instructors ID</td>
 		<td>Course Type</td>
 		<td>Begin Time</td>
-		<td>Taken Numbers</td>
+
 	</tr>
 	</thead>
 	<tbody>
@@ -43,8 +43,7 @@
 		  echo "<tr>";
 		  echo "<td>",$query_data[0], "</td>",
 			   "<td>",$query_data[1], "</td>",
-			   "<td>",$query_data[2], "</td>",
-			   "<td>",$query_data[3], "</td>";
+			   "<td>",$query_data[2], "</td>";
 		  echo "</tr>";
 		}
 		?>
