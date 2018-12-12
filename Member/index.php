@@ -2,8 +2,8 @@
 <?php
 require_once('database.php');
 
-	//$M_ID = $_SESSION['ID'];
-	$M_ID = 1;
+	$M_ID = $_SESSION['ID'];
+	//$M_ID = 1;
 	
 	//查詢該會員所有課程
 	$res1 = $mysqli->query("select Course_Type,Course_ID
