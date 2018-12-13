@@ -42,7 +42,7 @@ else{
 	//教練
 	$result = mysqli_query($mysqli, "
 		SELECT `I_Password`
-		FROM `Instructor`
+		FROM `instructor`
 		WHERE `I_ID`= '$username'		
 		"); 
 
