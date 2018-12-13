@@ -33,7 +33,7 @@ require_once('database.php');
     	</thead>
 		<tbody>
 		<?php
-		$result = mysqli_query($mysqli, "SELECT * FROM `monthly_kpi_report`
+		$result = mysqli_query($mysqli, "SELECT * FROM `Monthly_KPI_Report`;			
 			"); 
 		while($query_data = mysqli_fetch_row($result)) {
 		  echo "<tr>";
